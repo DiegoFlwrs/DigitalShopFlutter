@@ -1,3 +1,4 @@
+import 'package:digital_shop/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_shop/core/constants/app_colors.dart';
 import 'package:digital_shop/core/constants/app_text_styles.dart';
@@ -38,11 +39,17 @@ class WelcomePage extends StatelessWidget {
                 const SizedBox(height: 24),
                 const DividerWithText(text: 'O'),
                 const SizedBox(height: 24),
-                const AuthButton(
+                AuthButton(
                   text: 'INICIAR SESIÓN',
                   backgroundColor: AppColors.bgBtnPrimary,
                   textColor: AppColors.black,
-                  borderColor: AppColors.primary
+                  borderColor: AppColors.primary,
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>LoginPage())
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
                 const AuthButton(
