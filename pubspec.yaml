@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  lottie: ^3.3.1  # <- Lottie agregado aquí correctamente
+  lottie: ^3.3.1  # Solo esta versión, elimina la otra
 
 dev_dependencies:
   flutter_test:
@@ -20,7 +20,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/icons/
     - assets/images/
+    - assets/animations/welcome_animation.json
+    

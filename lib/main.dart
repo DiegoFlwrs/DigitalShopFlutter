@@ -1,4 +1,4 @@
-import 'package:digital_shop/features/auth/presentation/pages/welcome_page.dart';
+import 'package:digital_shop/features/auth/presentation/pages/start.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const WelcomePage(), 
+      home: const StartScreen(), 
     );
   }
 }
