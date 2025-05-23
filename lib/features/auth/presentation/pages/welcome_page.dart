@@ -119,7 +119,7 @@ class WelcomePage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 36),
+            padding: const EdgeInsets.only(left: 26, right: 26, top: 36),
             child: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
@@ -140,7 +140,7 @@ class WelcomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(26),
                       child: Lottie.asset(
                         'assets/animations/welcome_animation.json',
-                        height: 280,
+                        height: 250,
                         repeat: true,
                         fit: BoxFit.cover,
                       ),
@@ -148,7 +148,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 20),
 
                 // Título con gradiente y sombra
                 Center(
@@ -190,7 +190,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 44),
+                const SizedBox(height: 20),
 
                 AuthButton(
                   iconPath: 'assets/icons/google.png',
@@ -216,11 +216,11 @@ class WelcomePage extends StatelessWidget {
                   },
                 ),
 
-                const SizedBox(height: 38),
+                const SizedBox(height: 10),
 
                 const DividerWithText(text: 'O'),
 
-                const SizedBox(height: 38),
+                const SizedBox(height: 10),
 
                 AuthButton(
                   text: 'INICIAR SESIÓN',
