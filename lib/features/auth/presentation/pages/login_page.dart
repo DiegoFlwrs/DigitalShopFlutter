@@ -1,5 +1,6 @@
+import 'package:digital_shop/features/auth/presentation/pages/welcome_page.dart' show AuthButton;
 import 'package:digital_shop/core/constants/app_colors.dart';
-import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
+import 'package:digital_shop/features/auth/presentation/pages/restard_page.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +13,23 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          // Fondo con imagen
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background_dcalu.png'), // imagen de fondo
+                image: AssetImage('assets/images/background_dcalu.png'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-            const CustomImageCard(
+          // Logo de la app
+          const CustomImageCard(
             imagePath: 'assets/images/dcalu.png',
             backgroundColor: AppColors.bgPrimary,
             borderColor: AppColors.primary,
             margin: EdgeInsets.only(top: 120, left: 150),
           ),
+          // Formulario
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(top: 260, left: 30, right: 30),
@@ -45,18 +49,18 @@ class LoginPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    child: const Column(
+                    child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Iniciar Sesión',
                           style: TextStyle(
                             fontSize: 35,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      SizedBox(height: 30),
-                        CustomTextField(
+                        const SizedBox(height: 30),
+                        const CustomTextField(
                           label: 'Correo',
                           icon: 'person',
                           backgroundColor: AppColors.bgPrimary,
@@ -65,8 +69,8 @@ class LoginPage extends StatelessWidget {
                           borderWidth: 3.0,
                           borderRadius: 10.0,
                         ),
-                        SizedBox(height: 35),
-                        CustomTextField(
+                        const SizedBox(height: 35),
+                        const CustomTextField(
                           label: 'Contraseña',
                           icon: 'lock',
                           backgroundColor: AppColors.bgPrimary,
@@ -76,25 +80,33 @@ class LoginPage extends StatelessWidget {
                           borderRadius: 10.0,
                           obscureText: true,
                         ),
-                        SizedBox(height: 35),
+                        const SizedBox(height: 35),
                         AuthButton(
-                        text: 'INGRESAR',
-                        backgroundColor: AppColors.primary,
-                        textColor: AppColors.white, 
-                        borderColor: AppColors.primary,
+                          text: 'INGRESAR',
+                          backgroundColor: AppColors.primary,
+                          textColor: AppColors.white,
+                          borderColor: AppColors.primary,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RestardPage(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 12),
-                        const Text(
-                          'eh olvidado la contraseña',
-                          style: TextStyle(color: AppColors.primary),
-                        ),
+                  const Text(
+                    'eh olvidado la contraseña',
+                    style: TextStyle(color: AppColors.primary),
+                  ),
                 ],
-              ),          
-            )
-          )
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -16,7 +16,7 @@ class AuthButton extends StatelessWidget {
     required this.backgroundColor,
     required this.textColor,
     this.borderColor,
-    this.onPressed,
+    this.onPressed, required bool isIconOnly,
   });
 
   @override
