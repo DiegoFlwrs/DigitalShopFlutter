@@ -87,22 +87,32 @@ class LoginPage extends StatelessWidget {
                           textColor: AppColors.white,
                           borderColor: AppColors.primary,
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RestardPage(),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const RestardPage(),
+                            //   ),
+                            // );
                           },
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'eh olvidado la contraseña',
+                  TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RestardPage(),
+                              ),
+                            );
+                  },
+                  child: Text(
+                    'He olvidado la contraseña',
                     style: TextStyle(color: AppColors.primary),
                   ),
+                ),
                 ],
               ),
             ),

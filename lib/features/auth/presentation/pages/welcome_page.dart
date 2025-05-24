@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:digital_shop/core/constants/app_colors.dart';
 import 'package:digital_shop/features/auth/presentation/pages/login_page.dart';
+import 'package:digital_shop/features/auth/presentation/pages/faqpage.dart';
 
 class AuthButton extends StatelessWidget {
   final String? iconPath;
@@ -251,6 +252,20 @@ class WelcomePage extends StatelessWidget {
           ),
         ),
       ),
-    );
+      floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Faqpag()),
+        );
+      },
+      backgroundColor: AppColors.primary,
+      tooltip: 'Preguntas Frecuentes',
+      child: const Icon(Icons.help_outline, color: Colors.white, size: 28),
+      elevation: 6,
+      shape: const CircleBorder(),
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+  );
   }
 }
