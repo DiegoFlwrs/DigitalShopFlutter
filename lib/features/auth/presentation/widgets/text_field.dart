@@ -64,6 +64,10 @@ class CustomTextField extends StatelessWidget {
         return Icons.email;
       case 'lock':
         return Icons.lock;
+      case 'code':
+        return Icons.code;
+      case 'search':
+        return Icons.search;
       default:
         return Icons.help_outline;
     }

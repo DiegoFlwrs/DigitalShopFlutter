@@ -23,5 +23,5 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/animations/welcome_animation.json
+    - assets/animations/
     
