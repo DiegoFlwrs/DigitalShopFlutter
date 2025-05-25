@@ -1,12 +1,12 @@
 import 'package:digital_shop/core/constants/app_colors.dart' show AppColors;
-import 'package:digital_shop/features/auth/presentation/pages/verifyCode_page.dart';
+import 'package:digital_shop/features/auth/presentation/pages/newPasword_page.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class RestardPage extends StatelessWidget {
-  const RestardPage({super.key});
+class VerifyCode extends StatelessWidget {
+  const VerifyCode({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,11 @@ class RestardPage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Icons.abc,
                         const SizedBox(height: 25),
                         const CustomTextField(
-                          label: 'Correo electrónico',
-                          icon: 'email',
+                          label: 'Codigo',
+                          icon: 'code',
                           backgroundColor: AppColors.bgPrimary,
                           textColor: AppColors.black,
                           borderColor: AppColors.primary,
@@ -71,26 +72,16 @@ class RestardPage extends StatelessWidget {
                         const SizedBox(height: 30),
                         Center(
                           child: AuthButton(
-                            text: 'ENVIAR CÓDIGO',
+                            text: 'VERIFICAR CÓDIGO',
                             backgroundColor: AppColors.primary,
                             textColor: AppColors.white,
                             borderColor: AppColors.primary,
                             onPressed: () {
                               Navigator.pop(context);
                               Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>VerifyCode())
+                              MaterialPageRoute(builder: (context)=>NewPassword())
                               );
                             },
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Center(
-                          child: Text(
-                            'Asegúrate de colocar bien tu correo',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.white,
-                            ),
                           ),
                         ),
                       ],

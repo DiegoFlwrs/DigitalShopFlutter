@@ -1,8 +1,9 @@
-import 'package:digital_shop/features/auth/presentation/pages/welcome_page.dart' show AuthButton;
 import 'package:digital_shop/core/constants/app_colors.dart';
 import 'package:digital_shop/features/auth/presentation/pages/restard_page.dart';
+import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
+import 'package:digital_shop/features/search/page/Search_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -87,12 +88,10 @@ class LoginPage extends StatelessWidget {
                           textColor: AppColors.white,
                           borderColor: AppColors.primary,
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const RestardPage(),
-                            //   ),
-                            // );
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SearchPage())
+                            );    
                           },
                         ),
                       ],
@@ -108,7 +107,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             );
                   },
-                  child: Text(
+                  child: const Text(
                     'He olvidado la contraseña',
                     style: TextStyle(color: AppColors.primary),
                   ),

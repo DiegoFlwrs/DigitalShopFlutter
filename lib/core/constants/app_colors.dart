@@ -8,4 +8,8 @@ class AppColors {
   static const Color bgPrimary = Color(0xFFEBD8C8);
   static const Color bgBtnPrimary = Color(0xFFF4EAE0);
   static const Color bgContainer = Color(0xFFA18172);
-}
+  static const List<Color> bdDragadeIA = [
+    Color.fromARGB(255, 185, 154, 140),
+  Color.fromARGB(255, 241, 230, 220)
+  ];
+  }

@@ -1,12 +1,10 @@
-import 'package:digital_shop/core/constants/app_colors.dart' show AppColors;
-import 'package:digital_shop/features/auth/presentation/pages/verifyCode_page.dart';
+import 'package:flutter/material.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
-import 'package:flutter/material.dart';
-
-class RestardPage extends StatelessWidget {
-  const RestardPage({super.key});
+import 'package:digital_shop/core/constants/app_colors.dart' show AppColors;
+class CreateAccount extends StatelessWidget {
+  const CreateAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +48,43 @@ class RestardPage extends StatelessWidget {
                       children: [
                         const Center(
                           child: Text(
-                            'Restaurar Contraseña',
+                            'Registrate',
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize:30,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                         ),
                         const SizedBox(height: 25),
+                        const Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Nombre',
+                                icon: 'person',
+                                backgroundColor: AppColors.bgPrimary,
+                                textColor: AppColors.black,
+                                borderColor: AppColors.primary,
+                                borderWidth: 3.0,
+                                borderRadius: 10.0,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Apellido',
+                                icon: 'person',
+                                backgroundColor: AppColors.bgPrimary,
+                                textColor: AppColors.black,
+                                borderColor: AppColors.primary,
+                                borderWidth: 3.0,
+                                borderRadius: 10.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
                         const CustomTextField(
                           label: 'Correo electrónico',
                           icon: 'email',
@@ -68,17 +94,40 @@ class RestardPage extends StatelessWidget {
                           borderWidth: 3.0,
                           borderRadius: 10.0,
                         ),
+                        const SizedBox(height: 20),
+                        const CustomTextField(
+                          label: 'Contraseña',
+                          icon: 'lock',
+                          backgroundColor: AppColors.bgPrimary,
+                          textColor: AppColors.black,
+                          borderColor: AppColors.primary,
+                          borderWidth: 3.0,
+                          borderRadius: 10.0,
+                          obscureText: true, 
+                        ),
+                        const SizedBox(height: 20),
+                        const CustomTextField(
+                          label: 'Confirmar contraseña',
+                          icon: 'lock',
+                          backgroundColor: AppColors.bgPrimary,
+                          textColor: AppColors.black,
+                          borderColor: AppColors.primary,
+                          borderWidth: 3.0,
+                          borderRadius: 10.0,
+                          obscureText: true, 
+                        ),
                         const SizedBox(height: 30),
                         Center(
                           child: AuthButton(
-                            text: 'ENVIAR CÓDIGO',
+                            text: 'REGISTRAR',
                             backgroundColor: AppColors.primary,
                             textColor: AppColors.white,
                             borderColor: AppColors.primary,
                             onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>VerifyCode())
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Código enviado al correo.'),
+                                ),
                               );
                             },
                           ),
@@ -86,7 +135,7 @@ class RestardPage extends StatelessWidget {
                         const SizedBox(height: 10),
                         const Center(
                           child: Text(
-                            'Asegúrate de colocar bien tu correo',
+                            'Al continuar, aceptas los Terminos y Condiciones',
                             style: TextStyle(
                               fontSize: 13,
                               color: AppColors.white,
