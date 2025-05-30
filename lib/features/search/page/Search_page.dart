@@ -46,9 +46,9 @@ class SearchPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
-                  Flexible(
+                  const Flexible(
                     flex: 2,
                     child: CustomTextField(
                       label: 'Buscar',
@@ -61,7 +61,7 @@ class SearchPage extends StatelessWidget {
                       obscureText: true,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Flexible(
                     flex: 1,
                     child: AuthButton(
@@ -71,6 +71,9 @@ class SearchPage extends StatelessWidget {
                       borderColor: AppColors.primary,
                       width: 120,
                       fontSize: 15,
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
                     ),
                   ),
                 ],

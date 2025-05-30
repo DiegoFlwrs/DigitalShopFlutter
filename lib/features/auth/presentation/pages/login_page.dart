@@ -1,13 +1,25 @@
 import 'package:digital_shop/core/constants/app_colors.dart';
+import 'package:digital_shop/core/services/api_service.dart';
+import 'package:digital_shop/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:digital_shop/features/auth/domain/repositories/implement/auth_repository.dart';
+import 'package:digital_shop/features/auth/domain/usecases/login_usecase.dart';
+import 'package:digital_shop/features/auth/presentation/controllers/login_controller.dart';
 import 'package:digital_shop/features/auth/presentation/pages/restard_page.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
-import 'package:digital_shop/features/search/page/Search_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final controller = LoginController(
+    LoginUseCase(
+      AuthRepositoryImpl(
+        AuthRemoteDatasource(ApiService()),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +73,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        const CustomTextField(
+                        CustomTextField(
                           label: 'Correo',
                           icon: 'person',
                           backgroundColor: AppColors.bgPrimary,
@@ -69,9 +81,10 @@ class LoginPage extends StatelessWidget {
                           borderColor: AppColors.primary,
                           borderWidth: 3.0,
                           borderRadius: 10.0,
+                          controller: controller.emailController
                         ),
                         const SizedBox(height: 35),
-                        const CustomTextField(
+                        CustomTextField(
                           label: 'Contraseña',
                           icon: 'lock',
                           backgroundColor: AppColors.bgPrimary,
@@ -80,6 +93,7 @@ class LoginPage extends StatelessWidget {
                           borderWidth: 3.0,
                           borderRadius: 10.0,
                           obscureText: true,
+                          controller: controller.passwordController,
                         ),
                         const SizedBox(height: 35),
                         AuthButton(
@@ -88,10 +102,16 @@ class LoginPage extends StatelessWidget {
                           textColor: AppColors.white,
                           borderColor: AppColors.primary,
                           onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SearchPage())
-                            );    
+                            // Navigator.pop(context);
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => SearchPage()));
+
+                            controller.login(context);
+                            // Navigator.pushReplacementNamed(context, '/search');
+                            
+                            // print("---------Login button pressed");
                           },
                         ),
                       ],
@@ -99,19 +119,19 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RestardPage(),
-                              ),
-                            );
-                  },
-                  child: const Text(
-                    'He olvidado la contraseña',
-                    style: TextStyle(color: AppColors.primary),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RestardPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'He olvidado la contraseña',
+                      style: TextStyle(color: AppColors.primary),
+                    ),
                   ),
-                ),
                 ],
               ),
             ),

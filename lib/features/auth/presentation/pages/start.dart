@@ -1,6 +1,5 @@
 import 'package:digital_shop/features/auth/presentation/widgets/floating_button.dart';
 import 'package:flutter/material.dart';
-import 'package:digital_shop/features/auth/presentation/pages/welcome_page.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -22,10 +21,7 @@ class StartScreen extends StatelessWidget {
           AnimatedStartButton(
             text: 'COMENZAR',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const WelcomePage()),
-              );
+              Navigator.pushNamed(context, '/welcome');
             },
           ),
         ],
