@@ -36,9 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
       ),
-      // body: Center(
-      //   child: Text("data"),
-      // ),
     );
   }
 }

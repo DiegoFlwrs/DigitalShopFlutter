@@ -1,4 +1,3 @@
-// login_response.dart
 class LoginResponse {
   final String token;
   final String message;

@@ -1,3 +1,8 @@
+import 'package:digital_shop/core/services/api_service.dart';
+import 'package:digital_shop/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:digital_shop/features/auth/domain/repositories/implement/auth_repository.dart';
+import 'package:digital_shop/features/auth/domain/useCases/login_usecase.dart';
+import 'package:digital_shop/features/auth/presentation/controllers/getProducts_controller.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +11,15 @@ import 'package:digital_shop/core/constants/app_colors.dart';
 import 'package:lottie/lottie.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+  SearchPage({super.key});
+
+  final controller = GetProductsController(
+    LoginUseCase(
+      AuthRepositoryImpl(
+        AuthRemoteDatasource(ApiService()),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +61,7 @@ class SearchPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Flexible(
+                  Flexible(
                     flex: 2,
                     child: CustomTextField(
                       label: 'Buscar',
@@ -58,7 +71,7 @@ class SearchPage extends StatelessWidget {
                       borderColor: AppColors.primary,
                       borderWidth: 3.0,
                       borderRadius: 10.0,
-                      obscureText: true,
+                      controller: controller.consultaController,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -72,7 +85,8 @@ class SearchPage extends StatelessWidget {
                       width: 120,
                       fontSize: 15,
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/home');
+                        // Navigator.pushReplacementNamed(context, '/home');
+                        controller.getProducts(context);
                       },
                     ),
                   ),

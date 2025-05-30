@@ -9,10 +9,11 @@ import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-
+  final _formKey = GlobalKey<FormState>();
   final controller = LoginController(
     LoginUseCase(
       AuthRepositoryImpl(
@@ -62,59 +63,60 @@ class LoginPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Iniciar Sesión',
-                          style: TextStyle(
-                            fontSize: 35,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(
+                              fontSize: 35,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 30),
-                        CustomTextField(
-                          label: 'Correo',
-                          icon: 'person',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          controller: controller.emailController
-                        ),
-                        const SizedBox(height: 35),
-                        CustomTextField(
-                          label: 'Contraseña',
-                          icon: 'lock',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          obscureText: true,
-                          controller: controller.passwordController,
-                        ),
-                        const SizedBox(height: 35),
-                        AuthButton(
-                          text: 'INGRESAR',
-                          backgroundColor: AppColors.primary,
-                          textColor: AppColors.white,
-                          borderColor: AppColors.primary,
-                          onPressed: () {
-                            // Navigator.pop(context);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => SearchPage()));
-
-                            controller.login(context);
-                            // Navigator.pushReplacementNamed(context, '/search');
-                            
-                            // print("---------Login button pressed");
-                          },
-                        ),
-                      ],
+                          const SizedBox(height: 30),
+                          CustomTextField(
+                            label: 'Correo',
+                            icon: 'person',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
+                            borderColor: AppColors.primary,
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            controller: controller.emailController,
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: 'Campo obligatorio'),
+                              EmailValidator(errorText: 'Correo inválido'),
+                            ]),
+                          ),
+                          const SizedBox(height: 35),
+                          CustomTextField(
+                            label: 'Contraseña',
+                            icon: 'lock',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
+                            borderColor: AppColors.primary,
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            obscureText: true,
+                            controller: controller.passwordController,
+                            validator: RequiredValidator(errorText: 'Campo obligatorio'),
+                          ),
+                          const SizedBox(height: 20),
+                          AuthButton(
+                            text: 'INGRESAR',
+                            backgroundColor: AppColors.primary,
+                            textColor: AppColors.white,
+                            borderColor: AppColors.primary,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                controller.login(context);
+                              }
+                            }
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -123,7 +125,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const RestardPage(),
+                          builder: (context) => RestardPage(),
                         ),
                       );
                     },

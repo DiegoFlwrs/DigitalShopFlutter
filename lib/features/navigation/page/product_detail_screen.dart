@@ -15,9 +15,6 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Center(
-            //   child: Image.asset("assets/hoody.png", height: 200),
-            // ),
             const SizedBox(height: 16),
             const Text("Winter hoody", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             const Text("\$128", style: TextStyle(fontSize: 20, color: Colors.deepOrange)),

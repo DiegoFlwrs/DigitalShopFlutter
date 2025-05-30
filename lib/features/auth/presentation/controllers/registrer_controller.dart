@@ -7,7 +7,7 @@ class RegistrerController {
   final apellidoController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController(); // Agrega esto
+  final confirmPasswordController = TextEditingController();
   final LoginUseCase loginUseCase;
 
   RegistrerController(this.loginUseCase);
