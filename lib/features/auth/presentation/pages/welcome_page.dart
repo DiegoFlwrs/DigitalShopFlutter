@@ -1,10 +1,8 @@
-import 'package:digital_shop/features/auth/presentation/pages/create_account.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/divider_with_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:digital_shop/core/constants/app_colors.dart';
-import 'package:digital_shop/features/auth/presentation/pages/login_page.dart';
 import 'package:digital_shop/features/auth/presentation/pages/faqpage.dart';
 import 'package:digital_shop/core/constants/app_text_styles.dart';
 
@@ -32,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.25),
+                          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.25),
                           blurRadius: 30,
                           spreadRadius: 10,
                         ),
@@ -40,7 +38,7 @@ class WelcomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(26),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(26),
+                      borderRadius: BorderRadius.circular(50),
                       child: Lottie.asset(
                         'assets/animations/welcome_animation.json',
                         height: 250,
@@ -76,7 +74,7 @@ class WelcomePage extends StatelessWidget {
                   iconPath: 'assets/icons/google.png',
                   text: 'Continuar con Google',
                   backgroundColor: Colors.white,
-                  borderColor: Colors.grey.shade300,
+                  borderColor: Colors.grey,
                   textColor: Colors.black87,
                   onPressed: () {
                     // TODO: Acción Google
@@ -102,10 +100,7 @@ class WelcomePage extends StatelessWidget {
                   textColor: AppColors.black,
                   borderColor: AppColors.primary,
                   onPressed: (){
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>LoginPage())
-                    );
+                    Navigator.pushNamed(context, "/login");
                   },
                 ),
                 const SizedBox(height: 20),
@@ -115,10 +110,7 @@ class WelcomePage extends StatelessWidget {
                   borderColor: AppColors.primary,
                   textColor: AppColors.white,
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>CreateAccount())
-                    );
+                    Navigator.pushNamed(context, '/createAccount');
                   },
                 ),
               ],

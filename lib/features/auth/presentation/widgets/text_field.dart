@@ -8,8 +8,9 @@ class CustomTextField extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
   final double? borderRadius;
-  final VoidCallback? onPressed;
-  final bool obscureText; // 👈 Nueva propiedad
+  final bool obscureText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator; 
 
   const CustomTextField({
     super.key,
@@ -20,15 +21,18 @@ class CustomTextField extends StatelessWidget {
     this.borderColor,
     this.borderWidth,
     this.borderRadius,
-    this.onPressed,
-    this.obscureText = false, // 👈 Valor por defecto
+    this.obscureText = false,
+    this.controller,
+    this.validator, 
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      obscureText: obscureText, // 👈 Se aplica aquí
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
       style: TextStyle(color: textColor),
+      validator: validator, 
       decoration: InputDecoration(
         prefixIcon: icon != null ? Icon(_getIconData(icon!), color: textColor) : null,
         hintText: label,

@@ -36,9 +36,9 @@ class Faqpag extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 138, 101, 90),
         elevation: 2,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Icon(Icons.support_agent, size: 24),
             SizedBox(width: 8),
             Text(

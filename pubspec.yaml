@@ -11,7 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  lottie: ^3.3.1  # Solo esta versión, elimina la otra
+  lottie: ^3.3.1
+  http: ^1.1.6
+  shared_preferences: ^2.5.3
+  form_field_validator: ^1.1.0
 
 dev_dependencies:
   flutter_test:

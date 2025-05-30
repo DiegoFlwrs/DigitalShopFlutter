@@ -7,8 +7,8 @@ class AuthButton extends StatelessWidget {
   final Color textColor;
   final Color borderColor;
   final VoidCallback? onPressed;
-  final double? width; // Propiedad para el ancho
-  final double? fontSize; // Nueva propiedad para el tamaño del texto
+  final double? width;
+  final double? fontSize; 
 
   const AuthButton({
     Key? key,
@@ -19,7 +19,7 @@ class AuthButton extends StatelessWidget {
     required this.borderColor,
     this.onPressed,
     this.width,
-    this.fontSize, // Se incluye en el constructor
+    this.fontSize, 
   }) : super(key: key);
 
   @override
@@ -58,7 +58,7 @@ class AuthButton extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w800,
-                  fontSize: fontSize ?? 18, // Se usa fontSize si está definido, si no, 18 por defecto
+                  fontSize: fontSize ?? 18, 
                   letterSpacing: 1.15,
                 ),
               ),
