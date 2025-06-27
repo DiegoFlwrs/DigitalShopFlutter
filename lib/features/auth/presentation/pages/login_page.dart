@@ -85,10 +85,10 @@ class LoginPage extends StatelessWidget {
                             borderWidth: 3.0,
                             borderRadius: 10.0,
                             controller: controller.emailController,
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: 'Campo obligatorio'),
-                              EmailValidator(errorText: 'Correo inválido'),
-                            ]),
+                            // validator: MultiValidator([
+                            //   RequiredValidator(errorText: 'Campo obligatorio'),
+                            //   EmailValidator(errorText: 'Correo inválido'),
+                            // ]),
                           ),
                           const SizedBox(height: 35),
                           CustomTextField(
@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
                             borderRadius: 10.0,
                             obscureText: true,
                             controller: controller.passwordController,
-                            validator: RequiredValidator(errorText: 'Campo obligatorio'),
+                            // validator: RequiredValidator(errorText: 'Campo obligatorio'),
                           ),
                           const SizedBox(height: 20),
                           AuthButton(

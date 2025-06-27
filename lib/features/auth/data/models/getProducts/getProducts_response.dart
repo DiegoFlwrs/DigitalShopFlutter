@@ -12,6 +12,7 @@ class GetProductResponse {
   final DateTime createdAt;
   final DateTime updatedAt;
   final Category category;
+  bool isFavorite;
 
   GetProductResponse({
     required this.id,
@@ -27,6 +28,7 @@ class GetProductResponse {
     required this.createdAt,
     required this.updatedAt,
     required this.category,
+    this.isFavorite = false,
   });
 
   factory GetProductResponse.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class GetProductResponse {
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       category: Category.fromJson(json['category']),
+      isFavorite: json['isFavorite'] ?? false,
     );
   }
 
@@ -62,6 +65,7 @@ class GetProductResponse {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'category': category.toJson(),
+      'isFavorite': isFavorite,
     };
   }
 }

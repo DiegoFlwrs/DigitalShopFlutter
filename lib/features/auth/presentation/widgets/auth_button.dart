@@ -8,7 +8,10 @@ class AuthButton extends StatelessWidget {
   final Color borderColor;
   final VoidCallback? onPressed;
   final double? width;
-  final double? fontSize; 
+  final double? fontSize;
+  final EdgeInsetsGeometry? padding;
+  final double? borderSize;
+  final double? borderRadius; // nuevo parámetro
 
   const AuthButton({
     Key? key,
@@ -19,24 +22,32 @@ class AuthButton extends StatelessWidget {
     required this.borderColor,
     this.onPressed,
     this.width,
-    this.fontSize, 
+    this.fontSize,
+    this.padding,
+    this.borderSize,
+    this.borderRadius, // agregar al constructor
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(borderRadius ?? 16); // uso del valor o default
+
     return Material(
       color: backgroundColor,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: radius,
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: radius,
         splashColor: textColor.withOpacity(0.2),
         onTap: onPressed,
         child: Container(
           height: 55,
           width: width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: borderColor, width: 2),
+            borderRadius: radius,
+            border: Border.all(
+              color: borderColor,
+              width: borderSize ?? 2,
+            ),
             boxShadow: [
               BoxShadow(
                 color: borderColor.withOpacity(0.15),
@@ -45,7 +56,7 @@ class AuthButton extends StatelessWidget {
               ),
             ],
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -58,7 +69,7 @@ class AuthButton extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w800,
-                  fontSize: fontSize ?? 18, 
+                  fontSize: fontSize ?? 18,
                   letterSpacing: 1.15,
                 ),
               ),
