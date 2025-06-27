@@ -4,7 +4,8 @@ import 'package:digital_shop/features/auth/presentation/pages/newPasword_page.da
 import 'package:digital_shop/features/auth/presentation/pages/start.dart';
 import 'package:digital_shop/features/auth/presentation/pages/verifyCode_page.dart';
 import 'package:digital_shop/features/auth/presentation/pages/welcome_page.dart';
-import 'package:digital_shop/features/navigation/page/home_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/home_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/product_detail_screen.dart';
 import 'package:digital_shop/features/search/page/Search_page.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(), 
         '/verifyCode': (context) => VerifyCode(),
         '/newPassword': (context) => NewPassword(),
+        '/detail': (context) => const ProductDetailScreen(),
+        '/homeScreen': (context) => const HomeScreen(),
       },
       home: const StartScreen(), 
     );

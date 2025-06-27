@@ -6,7 +6,8 @@ class ApiService {
   final client = http.Client();
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
-    String baseUrl = "http://10.0.2.2:3000";
+    // String baseUrl = "http://10.0.2.2:3000";
+    String baseUrl = "http://localhost:3000";
     final response = await client.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: {'Content-Type': 'application/json'},

@@ -1,5 +1,6 @@
 import 'package:digital_shop/features/auth/domain/usecases/login_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/models/login_request.dart';
 
 class LoginController {
@@ -21,8 +22,10 @@ class LoginController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login exitoso")),
       );
-      // print('--------------------Login exitoso: ${response}');
-
+      print('--------------------Login exitoso: ${response}');
+      final prefs = await SharedPreferences.getInstance();
+      // print("id: ${response.userId.toString()}");
+      await prefs.setInt('userId', response.userId);
       Navigator.pushReplacementNamed(context, '/search');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
