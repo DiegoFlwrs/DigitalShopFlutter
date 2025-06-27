@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'cart_screen.dart';
 import 'favorites_screen.dart';
 import 'profile_screen.dart';
-import 'product_detail_screen.dart';
 import '../widgets/bottom_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {

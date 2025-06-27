@@ -43,7 +43,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   Future<void> _initializeServices() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
     final apiService = ApiService();
     final remoteDatasource = NavegationRemoteDatasource(apiService);
     final repository = NavegationRepositoryImpl(remoteDatasource);
