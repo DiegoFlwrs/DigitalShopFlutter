@@ -17,15 +17,16 @@ class LoginController {
     );
 
     try {
-      final response = await loginUseCase.execute(request);
-      print('Token: ${response}');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login exitoso")),
-      );
-      print('--------------------Login exitoso: ${response}');
+      // final response = await loginUseCase.execute(request);
+      // print('Token: ${response}');
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text("Login exitoso")),
+      // );
+      // print('--------------------Login exitoso: ${response}');
       final prefs = await SharedPreferences.getInstance();
-      // print("id: ${response.userId.toString()}");
-      await prefs.setInt('userId', response.userId);
+      // // print("id: ${response.userId.toString()}");
+      // await prefs.setInt('userId', response.userId);
+      await prefs.setInt('userId', 3);
       Navigator.pushReplacementNamed(context, '/search');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

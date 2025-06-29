@@ -1,4 +1,7 @@
 import 'package:digital_shop/features/navigation/data/datasources/navegation_remote_datasource.dart';
+import 'package:digital_shop/features/navigation/data/models/cart/cart_request.dart';
+import 'package:digital_shop/features/navigation/data/models/cart/cart_response.dart';
+import 'package:digital_shop/features/navigation/data/models/cart/get_cart_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/CategoryStatisticResponse.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_isFavorite_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_request.dart';
@@ -36,5 +39,25 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory() {
   return datasource.getFavoritesStatisticsByCategory();
 }
+
+@override
+  Future<CartResponse> addToCart(CartRequest request) {
+    return datasource.addToCart(request);
+  }
+
+  @override
+  Future<CartResponse> removeFromCart(CartRequest request) {
+    return datasource.removeFromCart(request);
+  }
+
+  @override
+  Future<List<GetCartItem>> getCartItems(int userId) {
+    return datasource.getCartItems(userId);
+  }
+
+  @override
+  Future<CartResponse> updateQuantity(CartRequest request) {
+    return datasource.updateQuantity(request);
+  }
 
 }

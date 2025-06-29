@@ -187,6 +187,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       Navigator.pushNamed(
                                           context, '/detail',
                                           arguments: {
+                                            'id': product.id,
                                             'name': product.name,
                                             'price': product.price,
                                             "description": product.description,

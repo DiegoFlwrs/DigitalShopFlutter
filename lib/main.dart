@@ -1,3 +1,4 @@
+import 'package:digital_shop/core/providers/auth_provider.dart';
 import 'package:digital_shop/core/services/api_service.dart';
 import 'package:digital_shop/features/auth/presentation/pages/create_account.dart';
 import 'package:digital_shop/features/auth/presentation/pages/login_page.dart';
@@ -15,13 +16,23 @@ import 'package:digital_shop/features/search/page/Search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   final apiService = ApiService();
   final data = NavegationRemoteDatasource(apiService);
   final repository = NavegationRepositoryImpl(data);
   Get.put(NavegationUseCase(repository));
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        // Otros providers que necesites
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +47,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/welcome': (context) => const WelcomePage(),
+        '/welcome': (context) => WelcomePage(),
         '/login': (context) =>  LoginPage(),
         '/createAccount': (context) => CreateAccount(),
         '/search': (context) => SearchPage(),
@@ -44,7 +55,7 @@ class MyApp extends StatelessWidget {
         '/verifyCode': (context) => VerifyCode(),
         '/newPassword': (context) => NewPassword(),
         '/detail': (context) => const ProductDetailScreen(),
-        '/homeScreen': (context) => const HomeScreen(),
+        // '/homeScreen': (context) => const HomeScreen(),
         '/statistics': (context) => const StatisticsPage(),
       },
       home: const StartScreen(), 
