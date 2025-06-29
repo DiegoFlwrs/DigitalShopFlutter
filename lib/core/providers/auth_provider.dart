@@ -26,7 +26,7 @@ class AuthProvider with ChangeNotifier {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/search');
       
     } catch (e) {
       _errorMessage = _getUserFriendlyError(e);

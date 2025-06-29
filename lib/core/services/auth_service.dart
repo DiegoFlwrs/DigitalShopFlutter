@@ -7,7 +7,10 @@ class AuthService {
   final ApiService _apiService;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
-    signInOption: SignInOption.standard,
+    // clientId: '598756613803-gv0341e2fjv82r89jd8bjqkhok3mtmph.apps.googleusercontent.com',
+    serverClientId:
+        '598756613803-anblrr39dne4ntj5kud1pmjqoq6fj48v.apps.googleusercontent.com',
+    // signInOption: SignInOption.standard,
   );
 
   AuthService(this._apiService);
@@ -16,16 +19,16 @@ class AuthService {
     try {
       // Verificar si hay conexión a internet
       // Puedes agregar un paquete como connectivity_plus para esto
-      print("3");
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      print("3 v2");
-      
+
       if (googleUser == null) {
         throw Exception('El usuario canceló el inicio de sesión');
       }
 
-      final GoogleSignInAuthentication googleAuth = 
+      final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
+      // print("ID TOKEN: ${googleAuth.idToken}");
+      // print("ACCESS TOKEN: ${googleAuth.accessToken}");
 
       if (googleAuth.idToken == null) {
         throw Exception('No se pudo obtener el token de Google');
@@ -45,6 +48,7 @@ class AuthService {
 
       await _saveUserData(response);
     } catch (e) {
+      print("Error Google Sign-In: $e");
       // Cerrar sesión de Google si hay error
       await _googleSignIn.signOut();
       rethrow;

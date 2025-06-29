@@ -82,8 +82,9 @@ class SearchPage extends StatelessWidget {
                       backgroundColor: AppColors.primary,
                       textColor: AppColors.white,
                       borderColor: AppColors.primary,
-                      width: 120,
+                      width: 115,
                       fontSize: 15,
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
                       onPressed: () {
                         // Navigator.pushReplacementNamed(context, '/home');
                         controller.getProducts(context);

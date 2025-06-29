@@ -27,7 +27,8 @@ class WelcomePage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 26, right: 26, top: 100),
+            // padding: const EdgeInsets.only(left: 26, right: 26, top: 100),
+            padding: const EdgeInsets.all(25),
             child: Consumer<AuthProvider>(
               builder: (context, auth, child) {
                 return Stack(
@@ -74,7 +75,7 @@ class WelcomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         const Text(
                           'Conéctate con la moda que te define y vive la experiencia Digital Shop. Aquí, cada prenda cuenta una historia.',
                           textAlign: TextAlign.center,

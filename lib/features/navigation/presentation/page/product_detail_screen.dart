@@ -61,7 +61,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             elevation: 8,
             child: Container(
-              height: screenHeight / 1.6,
+              height: screenHeight / 1.8,
               width: double.maxFinite,
               padding: const EdgeInsets.all(16),
               child: Center(

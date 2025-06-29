@@ -17,12 +17,12 @@ class LoginController {
     );
 
     try {
-      // final response = await loginUseCase.execute(request);
-      // print('Token: ${response}');
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text("Login exitoso")),
-      // );
-      // print('--------------------Login exitoso: ${response}');
+      final response = await loginUseCase.execute(request);
+      print('Token: ${response}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login exitoso")),
+      );
+      print('--------------------Login exitoso: ${response}');
       final prefs = await SharedPreferences.getInstance();
       // // print("id: ${response.userId.toString()}");
       // await prefs.setInt('userId', response.userId);

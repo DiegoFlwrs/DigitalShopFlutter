@@ -275,45 +275,50 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                product.name,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                '\$${product.price.toStringAsFixed(2)}',
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                              )
-                                            ],
+                                          Expanded(
+                                            // 👈 Esto evita el overflow
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.name,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  '\$${product.price.toStringAsFixed(2)}',
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                           IconButton(
                                             icon: const Icon(
                                                 Icons.remove_red_eye_sharp),
                                             onPressed: () {
                                               Navigator.pushNamed(
-                                                  context, '/detail',
-                                                  arguments: {
-                                                    'id': product.id,
-                                                    'name': product.name,
-                                                    'price': product.price,
-                                                    "description":
-                                                        product.description,
-                                                    "imageUrl":
-                                                        product.imageUrl,
-                                                    "category":
-                                                        product.category.name,
-                                                    "isFavorite":
-                                                        product.isFavorite,
-                                                  });
+                                                context,
+                                                '/detail',
+                                                arguments: {
+                                                  'id': product.id,
+                                                  'name': product.name,
+                                                  'price': product.price,
+                                                  "description":
+                                                      product.description,
+                                                  "imageUrl": product.imageUrl,
+                                                  "category":
+                                                      product.category.name,
+                                                  "isFavorite":
+                                                      product.isFavorite,
+                                                },
+                                              );
                                             },
                                           ),
                                         ],
