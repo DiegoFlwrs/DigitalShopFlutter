@@ -1,13 +1,9 @@
 // cart_screen.dart
 import 'package:digital_shop/core/constants/app_colors.dart';
-import 'package:digital_shop/core/services/api_service.dart';
-import 'package:digital_shop/features/navigation/data/datasources/navegation_remote_datasource.dart';
 import 'package:digital_shop/features/navigation/data/models/cart/get_cart_response.dart';
-import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
-import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
 import 'package:digital_shop/features/navigation/presentation/controllers/cart_controller.dart';
+import 'package:digital_shop/features/navigation/presentation/page/web/Payment_web.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -47,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
     try {
       final items = await _cartController.getCartItems();
       final total = _calculateTotal(items);
-      
+
       setState(() {
         _cartItems = items;
         _total = total;
@@ -68,6 +64,73 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> _refreshCart() async {
     setState(() => _isLoading = true);
     await _loadCartItems();
+  }
+
+  Future<void> _proceedToPayment(BuildContext context) async {
+    try {
+      // Mostrar diálogo de confirmación
+      final shouldProceed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Confirmar compra'),
+          content: const Text('¿Estás seguro que deseas proceder con el pago?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Confirmar'),
+            ),
+          ],
+        ),
+      );
+
+      if (shouldProceed != true) return;
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+
+      final order = await _cartController.createOrder(
+        shippingAddress: 'BArrio 2',
+        notes: "A domicilio",
+        context: context,
+      );
+
+      final payment = await _cartController.createPayment(
+        orderId: order['id'],
+        context: context,
+      );
+
+      // Cerrar el diálogo de carga
+      Navigator.pop(context);
+
+      // final url ="https://www.mercadopago.com.pe/checkout/v1/redirect?pref_id=2522288611-d97e8947-3d4a-4f27-8b03-3b1014555653";
+      // print(""+ payment.paymentUrl!);
+
+      // 3. Abrir la URL de pago de MercadoPago
+      if (payment.paymentUrl != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PaymentWebView(paymentUrl: payment.paymentUrl!),
+          ),
+        );
+      } else {
+        throw 'No se recibió URL de pago';
+      }
+    } catch (e) {
+      // Cerrar el diálogo de carga si hay error
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error en el proceso de pago: $e')),
+      );
+    }
   }
 
   @override
@@ -123,8 +186,8 @@ class _CartScreenState extends State<CartScreen> {
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => 
-                  const Icon(Icons.broken_image, size: 80),
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.broken_image, size: 80),
               ),
             ),
             const SizedBox(width: 16),
@@ -161,7 +224,8 @@ class _CartScreenState extends State<CartScreen> {
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: () async {
-                    await _cartController.removeFromCart(item.productId, context);
+                    await _cartController.removeFromCart(
+                        item.productId, context);
                     await _refreshCart();
                   },
                 ),
@@ -247,9 +311,7 @@ class _CartScreenState extends State<CartScreen> {
                 backgroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              onPressed: () {
-                // Lógica para proceder al pago
-              },
+              onPressed: () => _proceedToPayment(context),
               child: const Text(
                 'Proceder al pago',
                 style: TextStyle(

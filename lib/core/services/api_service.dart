@@ -79,5 +79,29 @@ Future<dynamic> delete(String endpoint, {Map<String, String>? queryParams}) asyn
   }
 }
 
+
+Future<dynamic> postToken(String endpoint, Map<String, dynamic> data, String token) async {
+  String baseUrl = "http://192.168.1.9:3000";
+
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': token, // ya incluye "Bearer ..."
+  };
+
+  final response = await client.post(
+    Uri.parse('$baseUrl$endpoint'),
+    headers: headers,
+    body: json.encode(data),
+  );
+
+  print("STATUS: ${response.statusCode}");
+  print("BODY: ${response.body}");
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return json.decode(response.body);
+  } else {
+    throw Exception('Error: ${response.statusCode} - ${response.body}');
+  }
+}
   // Puedes agregar métodos GET, PUT, DELETE aquí también.
 }

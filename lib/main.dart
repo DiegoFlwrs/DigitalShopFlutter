@@ -10,6 +10,8 @@ import 'package:digital_shop/features/navigation/data/datasources/navegation_rem
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
 import 'package:digital_shop/features/navigation/presentation/page/home_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/payment/payment_failure_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/payment/payment_success_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/product_detail_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/statistics/statistics_screen.dart';
 import 'package:digital_shop/features/search/page/Search_page.dart';
@@ -48,17 +50,19 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/welcome': (context) => WelcomePage(),
-        '/login': (context) =>  LoginPage(),
+        '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccount(),
         '/search': (context) => SearchPage(),
-        '/home': (context) => const HomeScreen(), 
+        '/home': (context) => const HomeScreen(),
         '/verifyCode': (context) => VerifyCode(),
         '/newPassword': (context) => NewPassword(),
         '/detail': (context) => const ProductDetailScreen(),
         // '/homeScreen': (context) => const HomeScreen(),
         '/statistics': (context) => const StatisticsPage(),
+        '/payment-success': (context) => const PaymentSuccessScreen(),
+        '/payment-failure': (context) => const PaymentFailureScreen(),
       },
-      home: const StartScreen(), 
+      home: const StartScreen(),
     );
   }
 }

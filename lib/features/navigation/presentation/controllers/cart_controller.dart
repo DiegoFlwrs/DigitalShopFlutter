@@ -2,12 +2,15 @@
 import 'package:digital_shop/core/services/api_service.dart';
 import 'package:digital_shop/features/navigation/data/datasources/navegation_remote_datasource.dart';
 import 'package:digital_shop/features/navigation/data/models/cart/cart_request.dart';
-import 'package:digital_shop/features/navigation/data/models/cart/cart_response.dart';
 import 'package:digital_shop/features/navigation/data/models/cart/get_cart_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CartController {
   final NavegationUseCase _cartUseCase;
@@ -21,7 +24,7 @@ class CartController {
     final remoteDatasource = NavegationRemoteDatasource(apiService);
     final repository = NavegationRepositoryImpl(remoteDatasource);
     final useCase = NavegationUseCase(repository);
-    
+
     return CartController(useCase, prefs);
   }
 
@@ -54,7 +57,7 @@ class CartController {
       );
 
       final response = await _cartUseCase.executeAddToCart(request);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response.message)),
       );
@@ -90,7 +93,8 @@ class CartController {
     }
   }
 
-  Future<void> updateQuantity(int productId, int newQuantity, BuildContext context) async {
+  Future<void> updateQuantity(
+      int productId, int newQuantity, BuildContext context) async {
     final userId = _prefs.getInt('userId');
     if (userId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -107,7 +111,7 @@ class CartController {
           quantity: newQuantity,
         ),
       );
-      
+
       if (!response.status) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(response.message)),
@@ -119,4 +123,84 @@ class CartController {
       );
     }
   }
+
+  Future<Map<String, dynamic>> createOrder({
+    String? shippingAddress,
+    String? notes,
+    required BuildContext context,
+  }) async {
+    final OrderRequest request = OrderRequest(
+      shippingAddress: shippingAddress,
+      notes: notes,
+    );
+
+    try {
+      final userId = _prefs.getInt('userId');
+      if (userId == null) {
+        throw Exception('Usuario no autenticado');
+      }
+      final response = await _cartUseCase.executeCreateOrder(request);
+      return response;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al crear la orden: $e')),
+      );
+      rethrow;
+    }
+  }
+
+  Future<PaymentResponse> createPayment({
+    required int orderId,
+    required BuildContext context,
+  }) async {
+    try {
+      // Usamos URLs de prueba para desarrollo
+      const successUrl = 'https://success.digitalshop';
+      const failureUrl = 'https://fail.digitalshop';
+
+      final response = await _cartUseCase.executeCreatePayment(
+        PaymentRequest(
+          method: 'mercado_pago',
+          orderId: orderId,
+          successUrl: successUrl,
+          failureUrl: failureUrl,
+        ),
+      );
+
+      return response;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al crear el pago: $e')),
+      );
+      rethrow;
+    }
+  }
+
+  // Future<void> launchPaymentUrl(String url, BuildContext context) async {
+  //   try {
+  //     final uri = Uri.parse(Uri.encodeFull(url));
+
+  //     // Intentamos primero abrir con navegador externo
+  //     bool launched = await launchUrl(
+  //       uri,
+  //       mode: LaunchMode.externalApplication,
+  //     );
+
+  //     if (!launched) {
+  //       // Si no se puede abrir con navegador, intentamos WebView integrado
+  //       launched = await launchUrl(
+  //         uri,
+  //         mode: LaunchMode.inAppWebView,
+  //       );
+  //     }
+
+  //     if (!launched) {
+  //       throw 'No se pudo abrir la URL ni con navegador externo ni con WebView';
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error al abrir el pago: $e')),
+  //     );
+  //   }
+  // }
 }

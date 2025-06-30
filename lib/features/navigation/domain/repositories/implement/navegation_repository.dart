@@ -8,6 +8,9 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_request.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/interface/inavegation_repository.dart';
 
 class NavegationRepositoryImpl implements iNavegationRepository {
@@ -58,6 +61,21 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   @override
   Future<CartResponse> updateQuantity(CartRequest request) {
     return datasource.updateQuantity(request);
+  }
+
+  @override
+  Future<Map<String, dynamic>> createOrder(OrderRequest request) async {
+    return await datasource.createOrder(request);
+  }
+
+  @override
+  Future<PaymentResponse> createPayment(PaymentRequest request) {
+    return datasource.createPayment(request);
+  }
+
+  @override
+  Future<int> getUserId() {
+    return datasource.getUserId();
   }
 
 }

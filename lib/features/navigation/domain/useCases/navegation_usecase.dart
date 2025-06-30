@@ -7,6 +7,9 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_request.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 
 class NavegationUseCase {
@@ -52,5 +55,17 @@ class NavegationUseCase {
 
   Future<CartResponse> executeUpdateQuantity(CartRequest request) async {
     return await repository.updateQuantity(request);
+  }
+
+  Future<Map<String, dynamic>> executeCreateOrder(OrderRequest request) async {
+    return await repository.createOrder(request);
+  }
+
+   Future<PaymentResponse> executeCreatePayment(PaymentRequest request) async {
+    return await repository.createPayment(request);
+  }
+
+  Future<int> executeGetUserId()  async {
+    return await repository.getUserId();
   }
 }

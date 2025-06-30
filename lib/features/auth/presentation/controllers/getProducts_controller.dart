@@ -25,7 +25,7 @@ class GetProductsController {
       final List<String> productsJsonList =
           products.map((product) => jsonEncode(product.toJson())).toList();
 
-      await prefs.setStringList('products', productsJsonList); // ✅ Aquí guardas
+      await prefs.setStringList('products', productsJsonList);
 
       Navigator.pushNamed(context, "/home"); 
 
