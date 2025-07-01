@@ -10,7 +10,6 @@ import 'package:digital_shop/features/navigation/domain/repositories/implement/n
 import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CartController {
   final NavegationUseCase _cartUseCase;

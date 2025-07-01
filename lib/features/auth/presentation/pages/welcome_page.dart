@@ -1,5 +1,4 @@
 import 'package:digital_shop/core/providers/auth_provider.dart';
-import 'package:digital_shop/core/services/api_service.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/divider_with_text.dart';
 import 'package:flutter/material.dart';

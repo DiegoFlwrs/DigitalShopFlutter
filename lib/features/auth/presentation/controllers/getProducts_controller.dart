@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_request.dart';
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_response.dart';
 import 'package:digital_shop/features/auth/domain/useCases/login_usecase.dart';
-import 'package:digital_shop/features/navigation/presentation/widgets/ProductListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
