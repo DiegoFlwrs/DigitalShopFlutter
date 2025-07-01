@@ -83,7 +83,7 @@ class _AnimatedStartButtonState extends State<AnimatedStartButton> with TickerPr
       child: SlideTransition(
         position: _floatAnimation,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 50.0),
+          padding: const EdgeInsets.only(bottom: 55.0),
           child: AnimatedBuilder(
             animation: Listenable.merge([_shadowController, _scaleController]),
             builder: (context, child) {
@@ -94,16 +94,16 @@ class _AnimatedStartButtonState extends State<AnimatedStartButton> with TickerPr
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 18),
+                    padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 13),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: _shadowAnimation.value,
                     shadowColor: AppColors.primary.withOpacity(0.5),
                   ),
                   child: Text(
                     widget.text,
-                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
               );

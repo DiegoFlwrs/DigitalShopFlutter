@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_request.dart';
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_response.dart';
 import 'package:digital_shop/features/auth/domain/useCases/login_usecase.dart';
-import 'package:digital_shop/features/navigation/presentation/widgets/ProductListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +24,7 @@ class GetProductsController {
       final List<String> productsJsonList =
           products.map((product) => jsonEncode(product.toJson())).toList();
 
-      await prefs.setStringList('products', productsJsonList); // ✅ Aquí guardas
+      await prefs.setStringList('products', productsJsonList);
 
       Navigator.pushNamed(context, "/home"); 
 

@@ -130,7 +130,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         setState(() {
           product.isFavorite = !product.isFavorite;
         });
-        
+
         // Actualizar almacenamiento local
         final favorites = prefs.getStringList('favorites') ?? [];
         if (product.isFavorite) {
@@ -228,17 +228,24 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Expanded(
                                       child: Stack(
                                         children: [
                                           ClipRRect(
-                                            borderRadius: const BorderRadius.vertical(
-                                                top: Radius.circular(12)),
+                                            borderRadius:
+                                                const BorderRadius.vertical(
+                                                    top: Radius.circular(12)),
                                             child: Image.network(
                                               product.imageUrl,
                                               fit: BoxFit.cover,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const Center(
+                                                      child: Icon(
+                                                          Icons.broken_image)),
                                             ),
                                           ),
                                           Positioned(
@@ -254,7 +261,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                     : Colors.white,
                                                 size: 28,
                                               ),
-                                              onPressed: () => _toggleFavorite(product),
+                                              onPressed: () =>
+                                                  _toggleFavorite(product),
                                             ),
                                           ),
                                         ],
@@ -264,39 +272,53 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8, vertical: 4),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                product.name,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.bold),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                '\$${product.price.toStringAsFixed(2)}',
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                              )
-                                            ],
+                                          Expanded(
+                                            // 👈 Esto evita el overflow
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.name,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  '\$${product.price.toStringAsFixed(2)}',
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                           IconButton(
-                                            icon: const Icon(Icons.remove_red_eye_sharp),
+                                            icon: const Icon(
+                                                Icons.remove_red_eye_sharp),
                                             onPressed: () {
                                               Navigator.pushNamed(
-                                                  context, '/detail',
-                                                  arguments: {
-                                                    'name': product.name,
-                                                    'price': product.price,
-                                                    "description": product.description,
-                                                    "imageUrl": product.imageUrl,
-                                                    "category": product.category.name,
-                                                    "isFavorite": product.isFavorite,
-                                                  });
+                                                context,
+                                                '/detail',
+                                                arguments: {
+                                                  'id': product.id,
+                                                  'name': product.name,
+                                                  'price': product.price,
+                                                  "description":
+                                                      product.description,
+                                                  "imageUrl": product.imageUrl,
+                                                  "category":
+                                                      product.category.name,
+                                                  "isFavorite":
+                                                      product.isFavorite,
+                                                },
+                                              );
                                             },
                                           ),
                                         ],

@@ -169,7 +169,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                           product.name,
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
-                                          maxLines: 1,
+                                          maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const SizedBox(height: 4),
@@ -187,6 +187,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       Navigator.pushNamed(
                                           context, '/detail',
                                           arguments: {
+                                            'id': product.id,
                                             'name': product.name,
                                             'price': product.price,
                                             "description": product.description,

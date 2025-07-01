@@ -24,8 +24,11 @@ class LoginController {
       );
       print('--------------------Login exitoso: ${response}');
       final prefs = await SharedPreferences.getInstance();
-      // print("id: ${response.userId.toString()}");
+      // print("token: " + response.token);
+      // // print("id: ${response .userId.toString()}");
+      await prefs.setString('tokenAccess', response.token);
       await prefs.setInt('userId', response.userId);
+      // await prefs.setInt('userId', 3);
       Navigator.pushReplacementNamed(context, '/search');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
