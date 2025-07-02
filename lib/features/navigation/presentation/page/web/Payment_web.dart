@@ -23,7 +23,6 @@ class _PaymentWebViewState extends State<PaymentWebView> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (url) {
-            print('URL cargada: $url');
             if (url.contains('success.digitalshop')) {
               Navigator.pushReplacementNamed(context, '/payment-success');
             } else if (url.contains('fail.digitalshop')) {

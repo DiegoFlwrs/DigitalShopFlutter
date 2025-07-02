@@ -174,7 +174,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          '\$${product.basePrice.toStringAsFixed(2)}',
+                                          'S/${product.basePrice.toStringAsFixed(2)}',
                                           style: const TextStyle(
                                               color: Colors.grey),
                                         ),

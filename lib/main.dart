@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // '/splash': (context) => const SplashScreen(),
         '/start': (context) => const StartScreen(),
-        '/welcome': (context) => WelcomePage(),
+        '/welcome': (context) => const WelcomePage(),
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccount(),
         '/search': (context) => SearchPage(),
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         '/payment-success': (context) => const PaymentSuccessScreen(),
         '/payment-failure': (context) => const PaymentFailureScreen(),
       },
-      home: const StartScreen(), // Cambia StartScreen por SplashScreen
+      home: const StartScreen(),
     );
   }
 }

@@ -215,7 +215,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Text(name ?? '',
                           style: const TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold)),
-                      Text("\$${currentPrice.toStringAsFixed(2)}",
+                      Text("S/${currentPrice.toStringAsFixed(2)}",
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
                     ],

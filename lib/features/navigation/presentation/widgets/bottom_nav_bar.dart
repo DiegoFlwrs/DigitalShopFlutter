@@ -15,10 +15,10 @@ class BottomNavBar extends StatelessWidget {
         selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.bgContainer,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoritos'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Carrito'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
       ],
     );
   }
