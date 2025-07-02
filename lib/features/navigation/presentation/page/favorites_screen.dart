@@ -132,7 +132,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                     borderRadius: const BorderRadius.vertical(
                                         top: Radius.circular(12)),
                                     child: Image.network(
-                                      product.imageUrl,
+                                      product.variants.first.imageUrl,
                                       fit: BoxFit.cover,
                                       errorBuilder: (context, error, stackTrace) => 
                                         const Center(child: Icon(Icons.broken_image)),
@@ -174,7 +174,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          '\$${product.price.toStringAsFixed(2)}',
+                                          '\$${product.basePrice.toStringAsFixed(2)}',
                                           style: const TextStyle(
                                               color: Colors.grey),
                                         ),
@@ -189,9 +189,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                           arguments: {
                                             'id': product.id,
                                             'name': product.name,
-                                            'price': product.price,
+                                            'price': product.basePrice,
                                             "description": product.description,
-                                            "imageUrl": product.imageUrl,
+                                            "imageUrl": product.variants.first.imageUrl,
                                             "category": product.category.name,
                                             "isFavorite": true,
                                           });

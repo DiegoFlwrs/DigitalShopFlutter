@@ -10,6 +10,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 
 class NavegationUseCase {
@@ -61,11 +62,46 @@ class NavegationUseCase {
     return await repository.createOrder(request);
   }
 
-   Future<PaymentResponse> executeCreatePayment(PaymentRequest request) async {
+  Future<PaymentResponse> executeCreatePayment(PaymentRequest request) async {
     return await repository.createPayment(request);
   }
 
-  Future<int> executeGetUserId()  async {
+  Future<int> executeGetUserId() async {
     return await repository.getUserId();
   }
+
+  Future<List<Variant>> executeGetProductVariants(int productId) async {
+    return await repository.getProductVariants(productId);
+  }
+
+  Future<List<String>> executeGetAvailableColors(int productId) async {
+    return await repository.getAvailableColors(productId);
+  }
+
+  Future<List<String>> executeGetAvailableSizes(int productId) async {
+    return await repository.getAvailableSizes(productId);
+  }
+
+  Future<List<String>> executeGetSizesForColor(
+      int productId, String color) async {
+    return await repository.getSizesForColor(productId, color);
+  }
+
+  Future<List<String>> executeGetColorsForSize(
+      int productId, String size) async {
+    return await repository.getColorsForSize(productId, size);
+  }
+
+  Future<VariantDetails> executeGetVariantDetails(
+    int productId,
+    String color,
+    String size,
+  ) async {
+    return await repository.getVariantDetails(productId, color, size);
+  }
+
+  Future<Map<String, dynamic>> executeGetFirstVariantForColor(int productId, String color) async {
+    return await repository.getFirstVariantForColor(productId, color);
+  }
+
 }

@@ -1,19 +1,20 @@
 class GetCartResponse {
   final bool status;
   final String message;
-  final GetCartItem? item;
+  final List<GetCartItem> items;
 
   GetCartResponse({
     required this.status,
     required this.message,
-    this.item,
+    required this.items,
   });
 
   factory GetCartResponse.fromJson(Map<String, dynamic> json) {
     return GetCartResponse(
       status: json['status'] ?? false,
       message: json['message'] ?? '',
-      item: json['item'] != null ? GetCartItem.fromJson(json['item']) : null,
+      items:
+          (json['items'] as List).map((e) => GetCartItem.fromJson(e)).toList(),
     );
   }
 }
@@ -27,6 +28,9 @@ class GetCartItem {
   final String category;
   int quantity;
 
+  final String? color; // Nuevo
+  final String? size; // Nuevo
+
   GetCartItem({
     required this.id,
     required this.productId,
@@ -35,6 +39,8 @@ class GetCartItem {
     required this.imageUrl,
     required this.category,
     required this.quantity,
+    this.color,
+    this.size,
   });
 
   factory GetCartItem.fromJson(Map<String, dynamic> json) {
@@ -46,6 +52,8 @@ class GetCartItem {
       imageUrl: json['imageUrl'] ?? '',
       category: json['category'] ?? 'Sin categoría',
       quantity: json['quantity'] ?? 1,
+      color: json['color'], // Nuevo
+      size: json['size'],
     );
   }
 }

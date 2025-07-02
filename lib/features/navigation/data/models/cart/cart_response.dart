@@ -19,21 +19,27 @@ class CartResponse {
 }
 
 class CartItem {
-  // final int id;
-  final int productId;
+  final int id;
+  final int cartId;
+  final int productVariantId;
   final int quantity;
+  final int? productId; 
 
   CartItem({
-    // required this.id,
-    required this.productId,
+    required this.id,
+    required this.cartId,
+    required this.productVariantId,
     required this.quantity,
+    this.productId,
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
-      // id: json['id'] | 0,
-      productId: json['productId'],
+      id: json['id'],
+      cartId: json['cartId'],
+      productVariantId: json['productVariantId'],
       quantity: json['quantity'],
+      productId: json['productId'],
     );
   }
 }

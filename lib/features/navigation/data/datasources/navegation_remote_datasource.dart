@@ -10,6 +10,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/services/api_service.dart';
@@ -58,7 +59,6 @@ class NavegationRemoteDatasource {
 
   Future<CartResponse> addToCart(CartRequest request) async {
     final json = await _apiService.post('/cart/add', request.toJson());
-
     if (json == null || json is! Map<String, dynamic>) {
       throw Exception('Respuesta inválida del servidor al agregar al carrito');
     }
@@ -73,10 +73,9 @@ class NavegationRemoteDatasource {
   }
 
   Future<List<GetCartItem>> getCartItems(int userId) async {
-    final jsonList = await _apiService.get('/cart/items/$userId');
-    return (jsonList as List)
-        .map((json) => GetCartItem.fromJson(json))
-        .toList();
+    final json = await _apiService.get('/cart/items/$userId');
+    final cartResponse = GetCartResponse.fromJson(json);
+    return cartResponse.items;
   }
 
   Future<CartResponse> updateQuantity(CartRequest request) async {
@@ -86,20 +85,22 @@ class NavegationRemoteDatasource {
 
   Future<Map<String, dynamic>> createOrder(OrderRequest request) async {
     final data = {
-      if (request.shippingAddress != null) 'shippingAddress': request.shippingAddress,
+      if (request.shippingAddress != null)
+        'shippingAddress': request.shippingAddress,
       if (request.notes != null) 'notes': request.notes,
     };
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString("tokenAccess");
-    final json = await _apiService.postToken('/orders', data, 'Bearer $accessToken');
+    final json =
+        await _apiService.postToken('/orders', data, 'Bearer $accessToken');
     return json as Map<String, dynamic>;
   }
-  
 
   Future<PaymentResponse> createPayment(PaymentRequest request) async {
     final localStorage = await SharedPreferences.getInstance();
     final accessToken = localStorage.getString("tokenAccess");
-    final json = await _apiService.postToken('/payments', request.toJson(), 'Bearer $accessToken');
+    final json = await _apiService.postToken(
+        '/payments', request.toJson(), 'Bearer $accessToken');
     return PaymentResponse.fromJson(json);
   }
 
@@ -111,4 +112,55 @@ class NavegationRemoteDatasource {
     }
     return userId;
   }
+
+  Future<List<Variant>> getProductVariants(int productId) async {
+    final json = await _apiService.get('/variants/$productId');
+    return (json as List).map((v) => Variant.fromJson(v)).toList();
+  }
+
+  Future<List<String>> getAvailableColors(int productId) async {
+    final json = await _apiService.get('/variants/$productId/colors');
+    return (json as List).cast<String>();
+  }
+
+  Future<List<String>> getAvailableSizes(int productId) async {
+    final json = await _apiService.get('/variants/$productId/sizes');
+    return (json as List).cast<String>();
+  }
+
+  Future<List<String>> getSizesForColor(int productId, String color) async {
+    final json = await _apiService.get(
+      '/variants/$productId/sizes-for-color',
+      queryParams: {'color': color},
+    );
+    return (json as List).cast<String>();
+  }
+
+  Future<List<String>> getColorsForSize(int productId, String size) async {
+    final json = await _apiService.get(
+      '/variants/$productId/colors-for-size',
+      queryParams: {'size': size},
+    );
+    return (json as List).cast<String>();
+  }
+
+  Future<VariantDetails> getVariantDetails(
+    int productId,
+    String color,
+    String size,
+  ) async {
+    final json = await _apiService.get(
+      '/variants/$productId/variant-details',
+      queryParams: {'color': color, 'size': size},
+    );
+    return VariantDetails.fromJson(json);
+  }
+
+  Future<Map<String, dynamic>> getFirstVariantForColor(int productId, String color) async {
+  final response = await _apiService.get(
+    '/variants/$productId/first-variant-for-color?color=$color'
+  );
+  return response;
+}
+
 }
