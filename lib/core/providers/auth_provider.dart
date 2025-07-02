@@ -11,9 +11,7 @@ class AuthProvider with ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   Future<void> handleGoogleSignIn(BuildContext context) async {
-    print("1");
     final authService = AuthService(ApiService());
-    print("2");
     
     try {
       _isLoading = true;
@@ -21,7 +19,6 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
 
       await authService.loginWithGoogle();
-    print("4");
       
       if (Navigator.canPop(context)) {
         Navigator.pop(context);

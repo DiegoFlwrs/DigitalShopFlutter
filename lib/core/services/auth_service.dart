@@ -27,8 +27,6 @@ class AuthService {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-      // print("ID TOKEN: ${googleAuth.idToken}");
-      // print("ACCESS TOKEN: ${googleAuth.accessToken}");
 
       if (googleAuth.idToken == null) {
         throw Exception('No se pudo obtener el token de Google');

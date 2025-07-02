@@ -89,18 +89,14 @@ class NavegationRemoteDatasource {
         'shippingAddress': request.shippingAddress,
       if (request.notes != null) 'notes': request.notes,
     };
-    final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString("tokenAccess");
     final json =
-        await _apiService.postToken('/orders', data, 'Bearer $accessToken');
+        await _apiService.post('/orders', data);
     return json as Map<String, dynamic>;
   }
 
   Future<PaymentResponse> createPayment(PaymentRequest request) async {
-    final localStorage = await SharedPreferences.getInstance();
-    final accessToken = localStorage.getString("tokenAccess");
-    final json = await _apiService.postToken(
-        '/payments', request.toJson(), 'Bearer $accessToken');
+    final json = await _apiService.post(
+        '/payments', request.toJson());
     return PaymentResponse.fromJson(json);
   }
 

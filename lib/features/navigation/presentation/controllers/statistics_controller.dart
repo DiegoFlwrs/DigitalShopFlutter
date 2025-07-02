@@ -13,8 +13,6 @@ class StatisticsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    
-  print("StatisticsController inicializado ✅");
     loadFavoritesStatisticsByCategory();
   }
 
@@ -22,7 +20,6 @@ class StatisticsController extends GetxController {
     try {
       isLoading.value = true;
       final result = await navegationUseCase.executeGetFavoritesStatisticsByCategory();
-      print("Resultado recibido: $result");
       statistics.assignAll(result);
     } catch (e) {
       print(e);

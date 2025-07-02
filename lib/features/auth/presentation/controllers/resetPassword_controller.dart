@@ -30,7 +30,6 @@ class ResetPasswordController {
 
     try {
       final response = await loginUseCase.executeResetPassword(request);
-      print(response);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Contraseña Actualizada!")),
       );

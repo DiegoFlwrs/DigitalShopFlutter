@@ -16,7 +16,6 @@ class SendCodeController {
 
     try {
       final response = await loginUseCase.executeSendCode(request);
-      print(response);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("codigo enviadocorrectamente")),
       );

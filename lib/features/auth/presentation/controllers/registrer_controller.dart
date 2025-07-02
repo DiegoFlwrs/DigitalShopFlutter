@@ -28,7 +28,6 @@ class RegistrerController {
 
     try {
       final response = await loginUseCase.executeRegister(request);
-      print('Token: ${response}');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Usuario registrado exitosamente")),
       );

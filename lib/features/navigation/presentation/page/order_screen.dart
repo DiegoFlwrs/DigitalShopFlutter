@@ -118,7 +118,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             ),
                             // Precio
                             Text(
-                              '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                              'S/${(item.price * item.quantity).toStringAsFixed(2)}',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -173,7 +173,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '\$${widget.total.toStringAsFixed(2)}',
+                    'S/${widget.total.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
