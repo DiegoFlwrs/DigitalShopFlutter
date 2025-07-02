@@ -36,7 +36,7 @@ class CartController {
   }
 
   Future<void> addToCart({
-    required int productId,
+    required int variantId, // Cambiado de productId a variantId
     required BuildContext context,
     int quantity = 1,
   }) async {
@@ -51,7 +51,7 @@ class CartController {
     try {
       final request = CartRequest(
         userId: userId,
-        productId: productId,
+        productId: variantId, // Ahora es el ID de la variante
         quantity: quantity,
       );
 

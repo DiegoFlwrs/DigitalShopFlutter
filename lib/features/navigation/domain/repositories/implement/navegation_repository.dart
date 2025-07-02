@@ -11,6 +11,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/interface/inavegation_repository.dart';
 
 class NavegationRepositoryImpl implements iNavegationRepository {
@@ -34,16 +35,17 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   }
 
   @override
-  Future<List<GetFavoritesListResponse>> getFavorites(FavoriteListRequest request) {
+  Future<List<GetFavoritesListResponse>> getFavorites(
+      FavoriteListRequest request) {
     return datasource.getFavorites(request);
   }
 
   @override
   Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory() {
-  return datasource.getFavoritesStatisticsByCategory();
-}
+    return datasource.getFavoritesStatisticsByCategory();
+  }
 
-@override
+  @override
   Future<CartResponse> addToCart(CartRequest request) {
     return datasource.addToCart(request);
   }
@@ -78,4 +80,44 @@ class NavegationRepositoryImpl implements iNavegationRepository {
     return datasource.getUserId();
   }
 
+  @override
+  Future<List<Variant>> getProductVariants(int productId) {
+    return datasource.getProductVariants(productId);
+  }
+
+  @override
+  Future<List<String>> getAvailableColors(int productId) {
+    return datasource.getAvailableColors(productId);
+  }
+
+  @override
+  Future<List<String>> getAvailableSizes(int productId) {
+    return datasource.getAvailableSizes(productId);
+  }
+
+  @override
+  Future<List<String>> getSizesForColor(int productId, String color) {
+    return datasource.getSizesForColor(productId, color);
+  }
+
+  @override
+  Future<List<String>> getColorsForSize(int productId, String size) {
+    return datasource.getColorsForSize(productId, size);
+  }
+
+  @override
+  Future<VariantDetails> getVariantDetails(
+    int productId,
+    String color,
+    String size,
+  ) {
+    return datasource.getVariantDetails(productId, color, size);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getFirstVariantForColor(int productId, String color) {
+    return datasource.getFirstVariantForColor(productId, color);
+  }
+
+  
 }

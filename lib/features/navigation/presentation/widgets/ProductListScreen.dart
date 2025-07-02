@@ -13,6 +13,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,6 +43,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
     _loadProductsFromStorage();
   }
 
+  static List<GetProductResponse> _parseProducts(List<String> productsJsonList) {
+  return productsJsonList.map((jsonStr) {
+    try {
+      return GetProductResponse.fromJson(jsonDecode(jsonStr));
+    } catch (e) {
+      debugPrint('Error parsing product: $e');
+      return null;
+    }
+  }).whereType<GetProductResponse>().toList();
+}
+
   Future<void> _initializeServices() async {
     // final prefs = await SharedPreferences.getInstance();
     final apiService = ApiService();
@@ -51,42 +63,70 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   Future<void> _loadProductsFromStorage() async {
-    setState(() => _isLoading = true);
-    final prefs = await SharedPreferences.getInstance();
-    final List<String>? productsJsonList = prefs.getStringList('products');
+    try {
+      if (mounted) setState(() => _isLoading = true);
 
-    if (productsJsonList == null || productsJsonList.isEmpty) {
-      setState(() {
-        _products = [];
-        _isLoading = false;
-      });
-      return;
-    }
+      final prefs = await SharedPreferences.getInstance();
+      final productsJsonList = prefs.getStringList('products') ?? [];
 
-    // Cargar productos
-    final loadedProducts = productsJsonList
-        .map((jsonStr) => GetProductResponse.fromJson(jsonDecode(jsonStr)))
-        .toList();
-
-    // Verificar estado de favoritos
-    final userId = prefs.getInt('userId');
-    if (userId != null) {
-      for (final product in loadedProducts) {
-        try {
-          final response = await _favoriteUseCase.executeIsFavorite(
-            FavoriteRequest(userId: userId, productId: product.id),
-          );
-          product.isFavorite = response.isFavorite;
-        } catch (e) {
-          product.isFavorite = false;
-        }
+      if (productsJsonList.isEmpty) {
+        if (mounted)
+          setState(() {
+            _products = [];
+            _isLoading = false;
+          });
+        return;
       }
-    }
 
-    setState(() {
-      _products = loadedProducts;
-      _isLoading = false;
-    });
+      Future<void> _checkFavoritesStatus(List<GetProductResponse> products) async {
+  final prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getInt('userId');
+  
+  if (userId == null) {
+    products.forEach((p) => p.isFavorite = false);
+    return;
+  }
+
+  // Procesar en lotes para no saturar
+  for (var i = 0; i < products.length; i += 10) {
+    final batch = products.sublist(i, i + 10 > products.length ? products.length : i + 10);
+    await Future.wait(batch.map((product) async {
+      try {
+        final response = await _favoriteUseCase.executeIsFavorite(
+          FavoriteRequest(userId: userId, productId: product.id),
+        );
+        product.isFavorite = response.isFavorite;
+      } catch (e) {
+        product.isFavorite = false;
+      }
+    }));
+  }
+}
+
+      // Procesar en bloques para no saturar el hilo principal
+      final loadedProducts = await compute(_parseProducts, productsJsonList);
+
+      // Verificar favoritos (optimizado)
+      await _checkFavoritesStatus(loadedProducts);
+
+      if (mounted) {
+        setState(() {
+          _products = loadedProducts;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading products: $e');
+      if (mounted) {
+        setState(() {
+          _products = [];
+          _isLoading = false;
+        });
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al cargar productos: ${e.toString()}')),
+      );
+    }
   }
 
   Future<void> _searchProducts() async {
@@ -239,7 +279,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                 const BorderRadius.vertical(
                                                     top: Radius.circular(12)),
                                             child: Image.network(
-                                              product.imageUrl,
+                                              product.variants.first.imageUrl,
+                                              // 'https://home.ripley.com.pe/Attachment/WOP_5/2020291550754/2020291550754_2.jpg',
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
@@ -292,7 +333,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                 ),
                                                 const SizedBox(height: 4),
                                                 Text(
-                                                  '\$${product.price.toStringAsFixed(2)}',
+                                                  '\$${product.basePrice.toStringAsFixed(2)}',
                                                   style: const TextStyle(
                                                       color: Colors.grey),
                                                 )
@@ -309,10 +350,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                 arguments: {
                                                   'id': product.id,
                                                   'name': product.name,
-                                                  'price': product.price,
+                                                  'price': product.basePrice,
                                                   "description":
                                                       product.description,
-                                                  "imageUrl": product.imageUrl,
+                                                  "imageUrl": product
+                                                      .variants.first.imageUrl,
                                                   "category":
                                                       product.category.name,
                                                   "isFavorite":

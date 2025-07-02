@@ -45,6 +45,7 @@ class AuthRemoteDatasource {
 
   Future<List<GetProductResponse>> getProducts(GetProductRequest request) async {
   final jsonList = await _apiService.post('/gemini/busqueda', request.toJson());
+  // print(jsonList);
   return (jsonList as List)
       .map((json) => GetProductResponse.fromJson(json))
       .toList();
