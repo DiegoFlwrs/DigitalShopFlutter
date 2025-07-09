@@ -1,7 +1,8 @@
-// variants_controller.dart
+import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/useCases/navegation_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VariantsController {
   final NavegationUseCase _useCase;
@@ -81,6 +82,27 @@ class VariantsController {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Error al obtener variante por color: $e')),
     );
+    return null;
+  }
+}
+
+Future<ProfiResponse?> getProfileUser(userId) async {
+  // print("wdwd");
+  // final prefs = await SharedPreferences.getInstance();
+  // final userId = prefs.getString('userId');
+  // print("vbsdhjdsjk");
+  // debugPrint('userId: $userId'); 
+  // if (userId == null) {
+  //   debugPrint('No se encontró el userId');
+  //   return null;
+  // }
+
+  try {
+    final response = await _useCase.executeGetProfileUser(int.parse(userId));
+    debugPrint('Respuesta del perfil: $response');
+    return response;
+  } catch (e) {
+    debugPrint('Error al obtener perfil: $e');
     return null;
   }
 }

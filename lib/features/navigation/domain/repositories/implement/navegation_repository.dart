@@ -11,6 +11,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/interface/inavegation_repository.dart';
 
@@ -115,9 +116,13 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getFirstVariantForColor(int productId, String color) {
+  Future<Map<String, dynamic>> getFirstVariantForColor(
+      int productId, String color) {
     return datasource.getFirstVariantForColor(productId, color);
   }
 
-  
+  @override
+  Future<ProfiResponse> getProfileUser(int userId) {
+    return datasource.getProfileUser(userId);
+  }
 }

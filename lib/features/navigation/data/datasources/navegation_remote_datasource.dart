@@ -10,6 +10,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -159,4 +160,11 @@ class NavegationRemoteDatasource {
   return response;
 }
 
+Future<ProfiResponse> getProfileUser(int userId) async {
+    final json = await _apiService.get('/porfile/data/$userId');
+    print("---------------------------------------");
+    print(json);
+    final profile_response = ProfiResponse.fromJson(json);
+    return profile_response;
+  }
 }

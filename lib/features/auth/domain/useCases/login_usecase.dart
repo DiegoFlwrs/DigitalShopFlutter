@@ -2,6 +2,7 @@ import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_r
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_response.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_request.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_response.dart';
+import 'package:digital_shop/features/auth/data/models/resetPassword/ResetPasswordRequestNoCode.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_request.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_response.dart';
 import 'package:digital_shop/features/auth/data/models/sendCode/sendCode_request.dart';
@@ -36,6 +37,10 @@ class LoginUseCase {
 
   Future<ResetPasswordResponse> executeResetPassword(ResetPasswordRequest request) async {
     return await repository.resetPassword(request);
+  }
+
+  Future<ResetPasswordResponse> executeResetPasswordNoCode(ResetPasswordNoCodeRequest request) async {
+    return await repository.resetPaswordNoCode(request);
   }
 
   Future<List<GetProductResponse>> executeGetProducts(GetProductRequest request) async {

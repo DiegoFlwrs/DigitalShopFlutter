@@ -10,6 +10,7 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
+import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/implement/navegation_repository.dart';
 
@@ -102,6 +103,10 @@ class NavegationUseCase {
 
   Future<Map<String, dynamic>> executeGetFirstVariantForColor(int productId, String color) async {
     return await repository.getFirstVariantForColor(productId, color);
+  }
+
+  Future<ProfiResponse> executeGetProfileUser(int userId) async {
+    return await repository.getProfileUser(userId);
   }
 
 }
