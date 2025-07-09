@@ -16,8 +16,8 @@ class ApiService {
 }
   
   Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
-    String baseUrl = "http://192.168.1.9:3000";
-    // String baseUrl = "http://10.0.2.2:3000";
+    // String baseUrl = "http://192.168.1.9:3000";
+    String baseUrl = "http://10.0.2.2:3000";
     // String baseUrl = "http://localhost:3000";
     final headers = await _getAuthHeaders();
     final response = await client.post(
@@ -35,8 +35,9 @@ class ApiService {
 
 
   Future<dynamic> get(String endpoint, {Map<String, String>? queryParams}) async {
-  String baseUrl = "http://192.168.1.9:3000";
+  // String baseUrl = "http://192.168.1.9:3000";
   // String baseUrl = "http://localhost:3000";
+  String baseUrl = "http://10.0.2.2:3000";
   final headers = await _getAuthHeaders();
   Uri uri = Uri.parse('$baseUrl$endpoint');
   if (queryParams != null && queryParams.isNotEmpty) {
@@ -57,7 +58,8 @@ class ApiService {
 
 Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
   // String baseUrl = "http://localhost:3000";
-  String baseUrl = "http://192.168.1.9:3000";
+  // String baseUrl = "http://192.168.1.9:3000";
+  String baseUrl = "http://10.0.2.2:3000";
   final headers = await _getAuthHeaders();
   final response = await client.put(
     Uri.parse('$baseUrl$endpoint'),
@@ -74,7 +76,8 @@ Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
 
 Future<dynamic> delete(String endpoint, {Map<String, String>? queryParams}) async {
   // String baseUrl = "http://localhost:3000";
-  String baseUrl = "http://192.168.1.9:3000";
+  // String baseUrl = "http://192.168.1.9:3000";
+  String baseUrl = "http://10.0.2.2:3000";
   final headers = await _getAuthHeaders();
   Uri uri = Uri.parse('$baseUrl$endpoint');
   if (queryParams != null && queryParams.isNotEmpty) {

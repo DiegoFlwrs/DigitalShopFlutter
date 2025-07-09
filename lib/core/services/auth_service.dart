@@ -15,10 +15,46 @@ class AuthService {
 
   AuthService(this._apiService);
 
+  // Future<void> loginWithGoogle() async {
+  //   try {
+  //     // Verificar si hay conexión a internet
+  //     // Puedes agregar un paquete como connectivity_plus para esto
+  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+  //     if (googleUser == null) {
+  //       throw Exception('El usuario canceló el inicio de sesión');
+  //     }
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     if (googleAuth.idToken == null) {
+  //       throw Exception('No se pudo obtener el token de Google');
+  //     }
+
+  //     // Enviar datos al backend
+  //     final response = await _apiService.post('/auth/google', {
+  //       'token': googleAuth.idToken,
+  //       'accessToken': googleAuth.accessToken,
+  //       'email': googleUser.email,
+  //       'name': googleUser.displayName,
+  //     });
+
+  //     if (response['token'] == null) {
+  //       throw Exception('No se recibió token del servidor');
+  //     }
+
+  //     await _saveUserData(response);
+  //   } catch (e) {
+  //     print("Error Google Sign-In: $e");
+  //     // Cerrar sesión de Google si hay error
+  //     await _googleSignIn.signOut();
+  //     rethrow;
+  //   }
+  // }
+
   Future<void> loginWithGoogle() async {
     try {
-      // Verificar si hay conexión a internet
-      // Puedes agregar un paquete como connectivity_plus para esto
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
@@ -40,15 +76,25 @@ class AuthService {
         'name': googleUser.displayName,
       });
 
-      if (response['token'] == null) {
-        throw Exception('No se recibió token del servidor');
+      print('Respuesta del backend: $response');
+
+      // Validar respuesta esperada
+      if (response['token'] == null ||
+          response['user'] == null ||
+          response['user']['id'] == null) {
+        throw Exception('No se recibió token o userId del servidor');
       }
 
-      await _saveUserData(response);
+      // Guardar datos de sesión en SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('tokenAccess', response['token']);
+      await prefs.setInt('userId', response['user']['id']);
+      await prefs.setString('userEmail', response['user']['email']);
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('loginTimestamp', DateTime.now().toString());
     } catch (e) {
       print("Error Google Sign-In: $e");
-      // Cerrar sesión de Google si hay error
-      await _googleSignIn.signOut();
+      await _googleSignIn.signOut(); // Cerrar sesión de Google si hay error
       rethrow;
     }
   }

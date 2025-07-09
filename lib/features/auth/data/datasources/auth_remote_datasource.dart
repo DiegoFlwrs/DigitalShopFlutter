@@ -2,6 +2,7 @@ import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_r
 import 'package:digital_shop/features/auth/data/models/getProducts/getProducts_response.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_request.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_response.dart';
+import 'package:digital_shop/features/auth/data/models/resetPassword/ResetPasswordRequestNoCode.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_request.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_response.dart';
 import 'package:digital_shop/features/auth/data/models/sendCode/sendCode_request.dart';
@@ -40,6 +41,11 @@ class AuthRemoteDatasource {
 
   Future<ResetPasswordResponse> resetPasword(ResetPasswordRequest request) async {
     final json = await _apiService.post('/auth/reset-password', request.toJson());
+    return ResetPasswordResponse.fromJson(json);
+  }
+
+  Future<ResetPasswordResponse> resetPaswordNoCode(ResetPasswordNoCodeRequest request) async {
+    final json = await _apiService.post('/auth/reset-password-nocode', request.toJson());
     return ResetPasswordResponse.fromJson(json);
   }
 

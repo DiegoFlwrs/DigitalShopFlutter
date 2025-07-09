@@ -1,3 +1,4 @@
+import 'package:digital_shop/features/auth/data/models/resetPassword/ResetPasswordRequestNoCode.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_request.dart';
 import 'package:digital_shop/features/auth/domain/useCases/login_usecase.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,23 @@ class ResetPasswordController {
       newPassword: newPasswordController.text,
     );
 
+    final requestNoCode = ResetPasswordNoCodeRequest(
+      email: emailEnviar.toString(),
+      newPassword: newPasswordController.text,
+    );
+    final response;
     try {
-      final response = await loginUseCase.executeResetPassword(request);
+      if(codeEnviar == null){
+        print("requestNoCode");
+        response = await loginUseCase.executeResetPasswordNoCode(requestNoCode);
+        // response = await loginUseCase.executeResetPassword(request);
+      }else{
+        print("request");
+        response = await loginUseCase.executeResetPassword(request);
+      }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Contraseña Actualizada!")),
+        SnackBar(content: response),
+        // SnackBar(content: Text("Contraseña Actualizada!")),
       );
 
       Navigator.pushReplacementNamed(context, '/login');

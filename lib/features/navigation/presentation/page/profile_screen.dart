@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Mi Perfil"),
-            // onTap: () => Navigator.pushNamed(context, "/edit_profile"),
+            onTap: () => Navigator.pushNamed(context, "/myporfile"),
           ),
           ListTile(
             leading: const Icon(Icons.history),

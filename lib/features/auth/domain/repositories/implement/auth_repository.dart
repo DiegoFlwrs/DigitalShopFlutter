@@ -5,6 +5,7 @@ import 'package:digital_shop/features/auth/data/models/login_request.dart';
 import 'package:digital_shop/features/auth/data/models/login_response.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_request.dart';
 import 'package:digital_shop/features/auth/data/models/registrer/registrer_response.dart';
+import 'package:digital_shop/features/auth/data/models/resetPassword/ResetPasswordRequestNoCode.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_request.dart';
 import 'package:digital_shop/features/auth/data/models/resetPassword/resetPassword_response.dart';
 import 'package:digital_shop/features/auth/data/models/sendCode/sendCode_request.dart';
@@ -43,6 +44,11 @@ class AuthRepositoryImpl implements iAuthRepository {
   @override
   Future<ResetPasswordResponse> resetPassword(ResetPasswordRequest request) {
     return datasource.resetPasword(request);
+  }
+
+  @override
+  Future<ResetPasswordResponse> resetPaswordNoCode(ResetPasswordNoCodeRequest request) {
+    return datasource.resetPaswordNoCode(request);
   }
   
   Future<List<GetProductResponse>> getProducts(GetProductRequest request) {

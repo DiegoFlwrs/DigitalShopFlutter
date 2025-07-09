@@ -12,6 +12,7 @@ import 'package:digital_shop/features/navigation/domain/useCases/navegation_usec
 import 'package:digital_shop/features/navigation/presentation/page/home_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/payment/payment_failure_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/payment/payment_success_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/porfile/porfile_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/product_detail_screen.dart';
 import 'package:digital_shop/features/navigation/presentation/page/statistics/statistics_screen.dart';
 import 'package:digital_shop/features/search/page/Search_page.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
         '/statistics': (context) => const StatisticsPage(),
         '/payment-success': (context) => const PaymentSuccessScreen(),
         '/payment-failure': (context) => const PaymentFailureScreen(),
+        '/myporfile': (context) => MyProfilePage(),
       },
       home: const StartScreen(),
     );
