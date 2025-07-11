@@ -1,3 +1,4 @@
+import 'package:digital_shop/features/navigation/presentation/widgets/appBar.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_shop/core/constants/app_colors.dart';
 
@@ -16,12 +17,13 @@ class HelpCenterScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        centerTitle: true,
-        title: const Text('Centro de Ayuda', style: TextStyle(color: AppColors.white)),
-        elevation: 2,
-      ),
+      appBar: const CustomAppBar(), 
+      // AppBar(
+      //   backgroundColor: AppColors.primary,
+      //   centerTitle: true,
+      //   title: const Text('Centro de Ayuda', style: TextStyle(color: AppColors.white)),
+      //   elevation: 2,
+      // ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -30,7 +32,7 @@ class HelpCenterScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppColors.white,
+              color: AppColors.primary,
             ),
           ),
           const SizedBox(height: 16),

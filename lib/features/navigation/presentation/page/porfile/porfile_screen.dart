@@ -1,3 +1,5 @@
+import 'package:digital_shop/core/constants/app_colors.dart';
+import 'package:digital_shop/features/auth/presentation/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_shop/features/navigation/presentation/widgets/appBar.dart';
 import 'package:digital_shop/features/navigation/presentation/controllers/variants_controller.dart';
@@ -33,21 +35,21 @@ class _MyProfilePageState extends State<MyProfilePage> {
   }
 
   Future<void> _loadUserId() async {
-  final prefs = await SharedPreferences.getInstance();
-  
-  // Obtener el userId como entero
-  int? id = prefs.getInt('userId');
-  if (id != null) {
-    print("userId recuperado: $id");
-  } else {
-    print("No se encontró el userId.");
+    final prefs = await SharedPreferences.getInstance();
+
+    // Obtener el userId como entero
+    int? id = prefs.getInt('userId');
+    if (id != null) {
+      print("userId recuperado: $id");
+    } else {
+      print("No se encontró el userId.");
+    }
+
+    // Actualiza el estado para que la UI se redibuje
+    setState(() {
+      userId = id?.toString(); // Convierte a String si es necesario
+    });
   }
-  
-  // Actualiza el estado para que la UI se redibuje
-  setState(() {
-    userId = id?.toString();  // Convierte a String si es necesario
-  });
-}
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
     }
 
     return Scaffold(
+      // backgroundColor: AppColors.bgPrimary,
       appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -82,13 +85,15 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                          backgroundImage:
+                              NetworkImage('https://cdn-icons-png.flaticon.com/512/219/219988.png'),
                         ),
                         IconButton(
                           onPressed: () {
                             // Acción para cambiar la foto
                           },
-                          icon: const Icon(Icons.camera_alt, color: Colors.white),
+                          icon:
+                              const Icon(Icons.camera_alt, color: Colors.white),
                           iconSize: 30,
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -104,6 +109,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -112,6 +118,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       fontSize: 16,
                       color: Colors.grey,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
 
@@ -136,10 +143,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           const SizedBox(height: 4),
                           Text(
                             profile?.name ?? 'Nombre no disponible',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                           const Divider(),
-
                           const Text(
                             "Correo Electrónico",
                             style: TextStyle(
@@ -150,10 +157,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           const SizedBox(height: 4),
                           Text(
                             profile?.email ?? 'Correo no disponible',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                           const Divider(),
-
                           const Text(
                             "Teléfono",
                             style: TextStyle(
@@ -180,6 +187,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
+                      foregroundColor: Colors.black
                     ),
                     child: const Text('Cambiar Contraseña'),
                   ),
@@ -188,19 +196,45 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   const Divider(),
                   const SizedBox(height: 16),
                   ListTile(
-                    title: const Text('Ajustes de la Cuenta', style: TextStyle(fontWeight: FontWeight.bold)),
+                    title: const Text('Ajustes de la Cuenta',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
+                  // ListTile(
+                  //   title: const Text('Cambiar dirección de envío'),
+                  //   onTap: () {
+                  //     // Acción para cambiar dirección
+                  //   },
+                  // ),
                   ListTile(
-                    title: const Text('Cambiar dirección de envío'),
-                    onTap: () {
-                      // Acción para cambiar dirección
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Cerrar sesión'),
-                    onTap: () {
-                      // Acción para cerrar sesión
+                    title: const Text('Cerrar sesión',
+                    style: TextStyle(
+                      color: Colors.red
+                    ),
+                    ),
+                    onTap: () async {
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Cerrar sesión'),
+                          content: const Text(
+                              '¿Estás seguro de que quieres cerrar sesión?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('Sí, cerrar sesión'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (confirm == true) {
+                        await LoginController.logout(context);
+                      }
                     },
                   ),
                 ],

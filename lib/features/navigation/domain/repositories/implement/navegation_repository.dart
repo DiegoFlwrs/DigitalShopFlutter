@@ -8,10 +8,13 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_request.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_history_item.dart';
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/paymentHistoryItem.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/PredictionResult.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:digital_shop/features/navigation/domain/repositories/interface/inavegation_repository.dart';
 
@@ -42,8 +45,8 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   }
 
   @override
-  Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory() {
-    return datasource.getFavoritesStatisticsByCategory();
+  Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory(int userId) {
+    return datasource.getFavoritesStatisticsByCategory(userId);
   }
 
   @override
@@ -125,4 +128,20 @@ class NavegationRepositoryImpl implements iNavegationRepository {
   Future<ProfiResponse> getProfileUser(int userId) {
     return datasource.getProfileUser(userId);
   }
+
+  @override
+  Future<List<PaymentHistoryItem>> getPaymentHistory(int userId) {
+    return datasource.getPaymentHistory(userId);
+  }
+  @override
+  Future<List<OrderHistoryItem>> getOrderHistory(int userId) {
+    return datasource.getOrderHistory(userId);
+  }
+
+  @override
+  Future<PredictionResponse> getAverageSpend(int userId) {
+    return datasource.getAverageSpend(userId);
+  }
+  
+
 }

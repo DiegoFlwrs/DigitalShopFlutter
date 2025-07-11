@@ -9,6 +9,7 @@ import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -50,7 +51,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(30),
-                    height: 400,
+                    // height: 410,
                     decoration: BoxDecoration(
                       color: AppColors.bgContainer,
                       borderRadius: BorderRadius.circular(16),
@@ -84,10 +85,10 @@ class LoginPage extends StatelessWidget {
                             borderWidth: 3.0,
                             borderRadius: 10.0,
                             controller: controller.emailController,
-                            // validator: MultiValidator([
-                            //   RequiredValidator(errorText: 'Campo obligatorio'),
-                            //   EmailValidator(errorText: 'Correo inválido'),
-                            // ]),
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: 'Campo obligatorio'),
+                              EmailValidator(errorText: 'Correo inválido'),
+                            ]),
                           ),
                           const SizedBox(height: 35),
                           CustomTextField(
@@ -100,7 +101,7 @@ class LoginPage extends StatelessWidget {
                             borderRadius: 10.0,
                             obscureText: true,
                             controller: controller.passwordController,
-                            // validator: RequiredValidator(errorText: 'Campo obligatorio'),
+                            validator: RequiredValidator(errorText: 'Campo obligatorio'),
                           ),
                           const SizedBox(height: 20),
                           AuthButton(

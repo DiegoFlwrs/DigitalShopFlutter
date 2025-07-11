@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:digital_shop/core/constants/app_text_styles.dart';
 import 'package:digital_shop/core/constants/app_colors.dart';
 import 'package:lottie/lottie.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
@@ -20,6 +21,8 @@ class SearchPage extends StatelessWidget {
       ),
     ),
   );
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,40 +62,45 @@ class SearchPage extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 2,
-                    child: CustomTextField(
-                      label: 'Buscar',
-                      icon: 'search',
-                      backgroundColor: AppColors.bgPrimary,
-                      textColor: AppColors.black,
-                      borderColor: AppColors.primary,
-                      borderWidth: 3.0,
-                      borderRadius: 10.0,
-                      controller: controller.consultaController,
+              Form(
+                key: _formKey,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: CustomTextField(
+                        label: 'Buscar',
+                        icon: 'search',
+                        backgroundColor: AppColors.bgPrimary,
+                        textColor: AppColors.black,
+                        borderColor: AppColors.primary,
+                        borderWidth: 3.0,
+                        borderRadius: 10.0,
+                        controller: controller.consultaController,
+                        validator:
+                        RequiredValidator(errorText: 'Campo requerido'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Flexible(
-                    flex: 1,
-                    child: AuthButton(
-                      text: 'BUSCAR',
-                      backgroundColor: AppColors.primary,
-                      textColor: AppColors.white,
-                      borderColor: AppColors.primary,
-                      width: 115,
-                      fontSize: 15,
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
-                      onPressed: () {
-                        // Navigator.pushReplacementNamed(context, '/home');
-                        controller.getProducts(context);
-                      },
+                    const SizedBox(width: 10),
+                    Flexible(
+                      flex: 1,
+                      child: AuthButton(
+                          text: 'BUSCAR',
+                          backgroundColor: AppColors.primary,
+                          textColor: AppColors.white,
+                          borderColor: AppColors.primary,
+                          width: 115,
+                          fontSize: 15,
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller.getProducts(context);
+                            }
+                          }),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

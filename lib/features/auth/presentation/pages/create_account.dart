@@ -8,6 +8,8 @@ import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:digital_shop/core/constants/app_colors.dart' show AppColors;
+import 'package:form_field_validator/form_field_validator.dart';
+
 class CreateAccount extends StatelessWidget {
   CreateAccount({super.key});
 
@@ -18,6 +20,8 @@ class CreateAccount extends StatelessWidget {
       ),
     ),
   );
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,112 +60,127 @@ class CreateAccount extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Text(
-                            'Registrate',
-                            style: TextStyle(
-                              fontSize:30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Center(
+                            child: Text(
+                              'Registrate',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 25),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: CustomTextField(
-                                label: 'Nombre',
-                                icon: 'person',
-                                backgroundColor: AppColors.bgPrimary,
-                                textColor: AppColors.black,
-                                borderColor: AppColors.primary,
-                                borderWidth: 3.0,
-                                borderRadius: 10.0,
-                                controller: controller.nameController,
+                          const SizedBox(height: 25),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'Nombre',
+                                  icon: 'person',
+                                  backgroundColor: AppColors.bgPrimary,
+                                  textColor: AppColors.black,
+                                  borderColor: AppColors.primary,
+                                  borderWidth: 3.0,
+                                  borderRadius: 10.0,
+                                  controller: controller.nameController,
+                                  validator: RequiredValidator(errorText: 'Campo requerido'),
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: CustomTextField(
-                                label: 'Apellido',
-                                icon: 'person',
-                                backgroundColor: AppColors.bgPrimary,
-                                textColor: AppColors.black,
-                                borderColor: AppColors.primary,
-                                borderWidth: 3.0,
-                                borderRadius: 10.0,
-                                controller: controller.apellidoController,
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'Apellido',
+                                  icon: 'person',
+                                  backgroundColor: AppColors.bgPrimary,
+                                  textColor: AppColors.black,
+                                  borderColor: AppColors.primary,
+                                  borderWidth: 3.0,
+                                  borderRadius: 10.0,
+                                  controller: controller.apellidoController,
+                                  validator: RequiredValidator(errorText: 'Campo requerido'),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextField(
-                          label: 'Correo electrónico',
-                          icon: 'email',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          controller: controller.emailController,
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextField(
-                          label: 'Contraseña',
-                          icon: 'lock',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          obscureText: true, 
-                          controller: controller.passwordController,
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextField(
-                          label: 'Confirmar contraseña',
-                          icon: 'lock',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          obscureText: true, 
-                          controller: controller.confirmPasswordController,
-                        ),
-                        const SizedBox(height: 30),
-                        Center(
-                          child: AuthButton(
-                            text: 'REGISTRAR',
-                            backgroundColor: AppColors.primary,
-                            textColor: AppColors.white,
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          CustomTextField(
+                            label: 'Correo electrónico',
+                            icon: 'email',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
                             borderColor: AppColors.primary,
-                            onPressed: () {
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   const SnackBar(
-                              //     content: Text('Código enviado al correo.'),
-                              //   ),
-                              // );
-                              controller.registrer(context);
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            controller: controller.emailController,
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: 'Campo obligatorio'),
+                              EmailValidator(errorText: 'Correo inválido'),
+                            ]),
+                          ),
+                          const SizedBox(height: 20),
+                          CustomTextField(
+                            label: 'Contraseña',
+                            icon: 'lock',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
+                            borderColor: AppColors.primary,
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            obscureText: true,
+                            controller: controller.passwordController,
+                            validator: MinLengthValidator(6, errorText: 'Mínimo 6 caracteres'),
+                          ),
+                          const SizedBox(height: 20),
+                          CustomTextField(
+                            label: 'Confirmar contraseña',
+                            icon: 'lock',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
+                            borderColor: AppColors.primary,
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            obscureText: true,
+                            controller: controller.confirmPasswordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Campo obligatorio';
+                              } else if (value != controller.passwordController.text) {
+                                return 'Las contraseñas no coinciden';
+                              }
+                              return null;
                             },
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Center(
-                          child: Text(
-                            'Al continuar, aceptas los Terminos y Condiciones',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.white,
+                          const SizedBox(height: 30),
+                          Center(
+                            child: AuthButton(
+                              text: 'REGISTRAR',
+                              backgroundColor: AppColors.primary,
+                              textColor: AppColors.white,
+                              borderColor: AppColors.primary,
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller.registrer(context);
+                                }
+                              },
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          const Center(
+                            child: Text(
+                              'Al continuar, aceptas los Términos y Condiciones',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
