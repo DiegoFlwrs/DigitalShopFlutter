@@ -44,164 +44,150 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Resumen de productos
-              const Text(
-                'Productos:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.cartItems.length,
-                  itemBuilder: (context, index) {
-                    final item = widget.cartItems[index];
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            // Imagen del producto
-                            Image.network(
-                              item.imageUrl,
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.broken_image, size: 60),
-                            ),
-                            const SizedBox(width: 12),
-                            // Detalles del producto
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(item.name,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Productos:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+
+                // Mostrar los productos sin ListView.builder
+                ...widget.cartItems.map((item) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Image.network(
+                            item.imageUrl,
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.broken_image, size: 60),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                const SizedBox(height: 4),
+                                Text('Cantidad: ${item.quantity}'),
+                                if (item.color != null) ...[
                                   const SizedBox(height: 4),
-                                  Text('Cantidad: ${item.quantity}'),
-                                  if (item.color != null) ...[
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        const Text('Color: '),
-                                        Container(
-                                          width: 16,
-                                          height: 16,
-                                          decoration: BoxDecoration(
-                                            color: _parseColor(item.color!),
-                                            shape: BoxShape.circle,
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                          ),
+                                  Row(
+                                    children: [
+                                      const Text('Color: '),
+                                      Container(
+                                        width: 16,
+                                        height: 16,
+                                        decoration: BoxDecoration(
+                                          color: _parseColor(item.color!),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: Colors.grey),
                                         ),
-                                        const SizedBox(width: 4),
-                                        Text(item.color!),
-                                      ],
-                                    ),
-                                  ],
-                                  if (item.size != null) ...[
-                                    const SizedBox(height: 4),
-                                    Text('Talla: ${item.size}'),
-                                  ],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(item.color!),
+                                    ],
+                                  ),
                                 ],
-                              ),
+                                if (item.size != null) ...[
+                                  const SizedBox(height: 4),
+                                  Text('Talla: ${item.size}'),
+                                ],
+                              ],
                             ),
-                            // Precio
-                            Text(
-                              'S/${(item.price * item.quantity).toStringAsFixed(2)}',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Text(
+                            'S/${(item.price * item.quantity).toStringAsFixed(2)}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                    );
+                    ),
+                  );
+                }).toList(),
+
+                const SizedBox(height: 16),
+                const Text(
+                  'Dirección de envío:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                TextFormField(
+                  controller: _addressController,
+                  decoration: const InputDecoration(
+                    hintText: 'Ingresa tu dirección completa',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingresa tu dirección';
+                    }
+                    return null;
                   },
                 ),
-              ),
 
-              // Dirección de envío
-              const SizedBox(height: 16),
-              const Text(
-                'Dirección de envío:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              TextFormField(
-                controller: _addressController,
-                decoration: const InputDecoration(
-                  hintText: 'Ingresa tu dirección completa',
+                const SizedBox(height: 16),
+                const Text(
+                  'Notas adicionales:',
+                  style: TextStyle(fontSize: 16),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingresa tu dirección';
-                  }
-                  return null;
-                },
-              ),
-
-              // Notas adicionales
-              const SizedBox(height: 16),
-              const Text(
-                'Notas adicionales:',
-                style: TextStyle(fontSize: 16),
-              ),
-              TextFormField(
-                controller: _notesController,
-                decoration: const InputDecoration(
-                  hintText: 'Ej: Piso, departamento, referencias, etc.',
-                ),
-                maxLines: 3,
-              ),
-
-              // Total y botón de pago
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Total:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                TextFormField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    hintText: 'Ej: Piso, departamento, referencias, etc.',
                   ),
-                  Text(
-                    'S/${widget.total.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                  maxLines: 3,
+                ),
+
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Total:',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  onPressed: _submitOrder,
-                  child: const Text(
-                    'Pagar ahora',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    Text(
+                      'S/${widget.total.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    onPressed: _submitOrder,
+                    child: const Text(
+                      'Pagar ahora',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -210,7 +196,6 @@ class _OrderScreenState extends State<OrderScreen> {
 
   void _submitOrder() {
     if (_formKey.currentState!.validate()) {
-      // Pasar los datos de vuelta a CartScreen para procesar el pago
       Navigator.pop(context, {
         'shippingAddress': _addressController.text,
         'notes': _notesController.text,

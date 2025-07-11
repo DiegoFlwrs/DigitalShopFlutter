@@ -8,7 +8,7 @@ import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
-
+import 'package:form_field_validator/form_field_validator.dart';
 class VerifyCode extends StatelessWidget {
   VerifyCode({super.key});
 
@@ -81,6 +81,10 @@ class VerifyCode extends StatelessWidget {
                           borderWidth: 3.0,
                           borderRadius: 10.0,
                           controller: controller.codeController,
+                          validator: MultiValidator([
+                              RequiredValidator(errorText: 'Campo obligatorio'),
+                              EmailValidator(errorText: 'Correo inválido'),
+                            ]),
                         ),
                         const SizedBox(height: 30),
                         Center(

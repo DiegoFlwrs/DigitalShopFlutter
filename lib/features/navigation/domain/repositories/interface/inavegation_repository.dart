@@ -7,10 +7,13 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_request.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_history_item.dart';
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/paymentHistoryItem.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/PredictionResult.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 
 abstract class iNavegationRepository {
@@ -23,7 +26,7 @@ abstract class iNavegationRepository {
   Future<List<GetFavoritesListResponse>> getFavorites(
       FavoriteListRequest request);
 
-  Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory();
+  Future<List<CategoryStatisticResponse>> getFavoritesStatisticsByCategory(int userId);
 
   Future<CartResponse> addToCart(CartRequest request);
 
@@ -52,4 +55,7 @@ abstract class iNavegationRepository {
       int productId, String color);
 
   Future<ProfiResponse> getProfileUser(int userId);
+  Future<List<PaymentHistoryItem>> getPaymentHistory(int userId);
+  Future<List<OrderHistoryItem>> getOrderHistory(int userId);
+  Future<PredictionResponse> getAverageSpend(int userId);
 }

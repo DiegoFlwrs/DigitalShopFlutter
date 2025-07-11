@@ -7,10 +7,13 @@ import 'package:digital_shop/features/navigation/data/models/favorites/favorites
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_list_response.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_request.dart';
 import 'package:digital_shop/features/navigation/data/models/favorites/favorites_response.dart';
+import 'package:digital_shop/features/navigation/data/models/order/order_history_item.dart';
 import 'package:digital_shop/features/navigation/data/models/order/order_request.dart';
+import 'package:digital_shop/features/navigation/data/models/payment/paymentHistoryItem.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_request.dart';
 import 'package:digital_shop/features/navigation/data/models/payment/payment_response.dart';
 import 'package:digital_shop/features/navigation/data/models/profile/profile_response.dart';
+import 'package:digital_shop/features/navigation/data/models/variant/PredictionResult.dart';
 import 'package:digital_shop/features/navigation/data/models/variant/VariantDetails_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,9 +50,9 @@ class NavegationRemoteDatasource {
   }
 
   Future<List<CategoryStatisticResponse>>
-      getFavoritesStatisticsByCategory() async {
+      getFavoritesStatisticsByCategory(int userId) async {
     final Map<String, dynamic> jsonMap =
-        await _apiService.get('/statistics/favorites-by-category');
+        await _apiService.get('/statistics/favorites-by-category/$userId');
     return jsonMap.entries
         .map((entry) => CategoryStatisticResponse(
               categoryName: entry.key,
@@ -90,14 +93,12 @@ class NavegationRemoteDatasource {
         'shippingAddress': request.shippingAddress,
       if (request.notes != null) 'notes': request.notes,
     };
-    final json =
-        await _apiService.post('/orders', data);
+    final json = await _apiService.post('/orders', data);
     return json as Map<String, dynamic>;
   }
 
   Future<PaymentResponse> createPayment(PaymentRequest request) async {
-    final json = await _apiService.post(
-        '/payments', request.toJson());
+    final json = await _apiService.post('/payments', request.toJson());
     return PaymentResponse.fromJson(json);
   }
 
@@ -153,18 +154,40 @@ class NavegationRemoteDatasource {
     return VariantDetails.fromJson(json);
   }
 
-  Future<Map<String, dynamic>> getFirstVariantForColor(int productId, String color) async {
-  final response = await _apiService.get(
-    '/variants/$productId/first-variant-for-color?color=$color'
-  );
-  return response;
-}
+  Future<Map<String, dynamic>> getFirstVariantForColor(
+      int productId, String color) async {
+    final response = await _apiService
+        .get('/variants/$productId/first-variant-for-color?color=$color');
+    return response;
+  }
 
-Future<ProfiResponse> getProfileUser(int userId) async {
+  Future<ProfiResponse> getProfileUser(int userId) async {
     final json = await _apiService.get('/porfile/data/$userId');
     print("---------------------------------------");
     print(json);
     final profile_response = ProfiResponse.fromJson(json);
     return profile_response;
   }
+
+  Future<List<PaymentHistoryItem>> getPaymentHistory(int userId) async {
+    final jsonList = await _apiService.get('/payments/history/$userId');
+
+    return (jsonList as List)
+        .map((json) => PaymentHistoryItem.fromJson(json))
+        .toList();
+  }
+
+  Future<List<OrderHistoryItem>> getOrderHistory(int userId) async {
+    final jsonList = await _apiService.get('/orders/history/$userId');
+
+    return (jsonList as List)
+        .map((json) => OrderHistoryItem.fromJson(json))
+        .toList();
+  }
+
+  Future<PredictionResponse> getAverageSpend(int userId) async {
+    final json = await _apiService.get('/prediction/average-spend/$userId');
+    return PredictionResponse.fromJson(json);
+  }
+
 }

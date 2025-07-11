@@ -8,6 +8,7 @@ import 'package:digital_shop/features/auth/presentation/widgets/auth_button.dart
 import 'package:digital_shop/features/auth/presentation/widgets/custom_image_card.dart';
 import 'package:digital_shop/features/auth/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class RestardPage extends StatelessWidget {
   RestardPage({super.key});
@@ -19,6 +20,8 @@ class RestardPage extends StatelessWidget {
       ),
     ),
   );
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,57 +60,62 @@ class RestardPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Text(
-                            'Restaurar Contraseña',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Center(
+                            child: Text(
+                              'Restaurar Contraseña',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 25),
-                        CustomTextField(
-                          label: 'Correo electrónico',
-                          icon: 'email',
-                          backgroundColor: AppColors.bgPrimary,
-                          textColor: AppColors.black,
-                          borderColor: AppColors.primary,
-                          borderWidth: 3.0,
-                          borderRadius: 10.0,
-                          controller: controller.emailController,
-                        ),
-                        const SizedBox(height: 30),
-                        Center(
-                          child: AuthButton(
-                            text: 'ENVIAR CÓDIGO',
-                            backgroundColor: AppColors.primary,
-                            textColor: AppColors.white,
+                          const SizedBox(height: 25),
+                          CustomTextField(
+                            label: 'Correo electrónico',
+                            icon: 'email',
+                            backgroundColor: AppColors.bgPrimary,
+                            textColor: AppColors.black,
                             borderColor: AppColors.primary,
-                            onPressed: () {
-                              // Navigator.pop(context);
-                              // Navigator.push(context,
-                              // MaterialPageRoute(builder: (context)=>VerifyCode())
-                              // );
-                              controller.sendCode(context);
-                            },
+                            borderWidth: 3.0,
+                            borderRadius: 10.0,
+                            controller: controller.emailController,
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: 'Campo obligatorio'),
+                              EmailValidator(errorText: 'Correo inválido'),
+                            ]),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Center(
-                          child: Text(
-                            'Asegúrate de colocar bien tu correo',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.white,
+                          const SizedBox(height: 30),
+                          Center(
+                            child: AuthButton(
+                              text: 'ENVIAR CÓDIGO',
+                              backgroundColor: AppColors.primary,
+                              textColor: AppColors.white,
+                              borderColor: AppColors.primary,
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller.sendCode(context);
+                                }
+                              },
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          const Center(
+                            child: Text(
+                              'Asegúrate de colocar bien tu correo',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

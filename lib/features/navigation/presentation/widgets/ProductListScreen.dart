@@ -16,6 +16,7 @@ import 'package:digital_shop/features/navigation/domain/useCases/navegation_usec
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -196,6 +197,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       });
     }
   }
+    final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +205,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
+            Form(
+              key: _formKey,
+              child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
@@ -218,6 +222,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       borderWidth: 3.0,
                       borderRadius: 10.0,
                       controller: controller.consultaController,
+                      validator: RequiredValidator(errorText: 'Campo requerido'),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -232,12 +237,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       fontSize: 15,
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       borderRadius: 10,
-                      onPressed: _searchProducts,
+                      onPressed: 
+                      (){
+                        if (_formKey.currentState!.validate()) {
+                        _searchProducts;
+                      }
+                      }
                     ),
                   ),
                 ],
               ),
             ),
+              ),
             if (_isLoading)
               const LinearProgressIndicator(
                 backgroundColor: Colors.grey,
