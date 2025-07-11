@@ -15,52 +15,58 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 10),
+
+          // Botón para ver perfil del usuario
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text("Mi Perfil"),
             onTap: () => Navigator.pushNamed(context, "/myporfile"),
           ),
+
+          // Botón para ver lista de pedidos
           ListTile(
             leading: const Icon(Icons.history),
             title: const Text("Mis Pedidos"),
-            // onTap: () => Navigator.pushNamed(context, "/orders"),
+            onTap: () => Navigator.pushNamed(context, "/orders"),
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.favorite),
-          //   title: const Text("Mis Favoritos"),
-          //   onTap: () => Navigator.pushNamed(context, "/favorites"),
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.location_on),
-          //   title: const Text("Direcciones Guardadas"),
-          //   onTap: () => Navigator.pushNamed(context, "/addresses"),
-          // ),
+
+          // Botón para ver historial de pagos
           ListTile(
             leading: const Icon(Icons.payment),
             title: const Text("Historial de Pagos"),
-            // onTap: () => Navigator.pushNamed(context, "/payment_history"),
+            onTap: () => Navigator.pushNamed(context, "/payment_history"),
           ),
+
           const Divider(height: 32),
+
           const Text(
             "Ajustes y Otros",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 10),
+
+          // Botón para configuración del usuario
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text("Configuración"),
-            // onTap: () => Navigator.pushNamed(context, "/settings"),
+            onTap: () => Navigator.pushNamed(context, "/settings"),
           ),
+
+          // Botón para centro de ayuda
           ListTile(
             leading: const Icon(Icons.help_outline),
             title: const Text("Centro de Ayuda"),
-            // onTap: () => Navigator.pushNamed(context, "/help_center"),
+            onTap: () => Navigator.pushNamed(context, "/help_center"),
           ),
+
+          // Botón para ver estadísticas del usuario
           ListTile(
             leading: const Icon(Icons.bar_chart),
             title: const Text("Ver Estadísticas"),
             onTap: () => Navigator.pushNamed(context, "/statistics"),
           ),
+
+          // Botón para cerrar sesión
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text("Cerrar sesión"),
@@ -71,8 +77,7 @@ class ProfileScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Cerrar sesión'),
-                  content:
-                      const Text('¿Estás seguro de que quieres cerrar sesión?'),
+                  content: const Text('¿Estás seguro de que quieres cerrar sesión?'),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context, false),

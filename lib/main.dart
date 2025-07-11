@@ -20,6 +20,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:digital_shop/features/navigation/presentation/page/orders_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/payments_history_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/settings_screen.dart';
+import 'package:digital_shop/features/navigation/presentation/page/help_center_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,8 +72,16 @@ class MyApp extends StatelessWidget {
         '/payment-success': (context) => const PaymentSuccessScreen(),
         '/payment-failure': (context) => const PaymentFailureScreen(),
         '/myporfile': (context) => MyProfilePage(),
+        '/orders': (context) => const OrdersScreen(),
+        '/payment_history': (context) => const PaymentsHistoryScreen(),
+        '/settings': (context) => const SettingsScreen(),
+        '/help_center': (context) => const HelpCenterScreen(),
+
+
       },
       home: const StartScreen(),
     );
   }
 }
+
+
